@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5450ac4c27dc594686d9ee8dd0c4060, type: 3}
+  m_Name: FasterAbility
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 5956543174570430323, guid: 0683163e014460f40bd76e0e0572c3bc, type: 3}
+  type: 3
+  UIimage: {fileID: 21300000, guid: 6c89c6479c423314a937370c9561f3d5, type: 3}
+  description: Speed Script
+  amountBonus: 0
+  forWhat: 0

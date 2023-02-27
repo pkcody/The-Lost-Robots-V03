@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c2004a0f2360af4197e7cf15e3625a0, type: 3}
+  m_Name: SOFanAdv
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 412213456281380853, guid: a8f3c82a411703146a53004ed2e1fc42, type: 3}
+  type: 0
+  UIimage: {fileID: 21300000, guid: 2cf4a6a3cad3e71489b3f0d646fa8e6e, type: 3}
+  description: Fan
+  amount: 0

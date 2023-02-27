@@ -1,0 +1,56 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - Cursors
+  - TowerCraftingEncounter
+  - MonsterEncounter
+  - ResourceEncounter
+  - ResourceItem
+  - RobotInfo
+  - Slider
+  - BoarderBoundry
+  - Mothership
+  - PickupParent
+  - HoldItem
+  - FixItEncounter
+  - TutorialScript
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - 
+  - Player
+  - Ground
+  - 
+  - TowersLocation
+  - MapBorders
+  - PushOver
+  - 
+  - 
+  - 
+  - Post Processing
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
