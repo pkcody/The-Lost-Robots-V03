@@ -25,10 +25,14 @@ public class Mothership : MonoBehaviour
     //particles
     public GameObject locationIcon;
 
+    public GameObject storyMovies;
+
     private void Start()
     {
         h20Slider.gameObject.SetActive(false);
         locationIcon.SetActive(false);
+
+        storyMovies = GameObject.Find("StoryMovies");
 
     }
     public void TryMotherShipEnd()
@@ -38,10 +42,15 @@ public class Mothership : MonoBehaviour
             // where end audio goes
             canBoardShip = true;
             MotherShipStory.instance.MSTalk("Outro_AllMissCounted");
+            MotherShipSubTitles.instance.GameSubT(5);
+
             foreach (var rm in FindObjectsOfType<RobotMessaging>())
             {
                 rm.MotherRobotSpeak("Yayyyy we did it!!!!!");
             }
+
+            storyMovies.transform.GetChild(2).gameObject.SetActive(true);
+            storyMovies.transform.GetChild(3).gameObject.SetActive(true);
         }
         else 
         {
@@ -134,7 +143,9 @@ public class Mothership : MonoBehaviour
                 if (robBoardedNum == PlayerInputManager.instance.playerCount)
                 {
                     MotherShipStory.instance.MSTalk("Outro_Thankyou");
-                    Invoke("ToCreditScene", 4.5f);
+                    MotherShipSubTitles.instance.GameSubT(6);
+
+                    Invoke("ToCreditScene", 10f);
                 }
             }
         }

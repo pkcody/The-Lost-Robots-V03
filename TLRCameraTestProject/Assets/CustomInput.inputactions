@@ -1022,7 +1022,7 @@
                     "name": "",
                     "id": "c03278d6-93d6-4801-bc99-18f88bfc6a4a",
                     "path": "<Gamepad>/buttonSouth",
-                    "interactions": "",
+                    "interactions": "Press(behavior=2),Hold(duration=0.05,pressPoint=0.05)",
                     "processors": "",
                     "groups": "",
                     "action": "Select",

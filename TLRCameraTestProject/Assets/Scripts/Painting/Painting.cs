@@ -23,6 +23,7 @@ public class Painting : MonoBehaviour
     private void OnEnable()
     {
         StartCoroutine(MotherShipStory.instance.PaintingCommentary());
+        MotherShipSubTitles.instance.MainMenuSubT(2);
 
     }
     private void OnDisable()
@@ -31,7 +32,7 @@ public class Painting : MonoBehaviour
 
     }
 
-    void Awake()
+    void Start()
     {
         foreach (GameObject go in PlayerSpawning.instance.players)
         {

@@ -17,10 +17,10 @@ public class CustomCursor : MonoBehaviour
     
 
 
-    private void Start()
-    {
-        ChangeCursorSize();   
-    }
+    //private void Start()
+    //{
+    //    paintSprite.rectTransform.position = new 
+    //}
 
     //private void Update()
     //{
@@ -32,27 +32,27 @@ public class CustomCursor : MonoBehaviour
     //    MoveCursor();
     //}
 
-    public void MoveCursor(Vector2 movementInput)
-    {
-        this.movementInput = movementInput;
+    //public void MoveCursor(Vector2 movementInput)
+    //{
+    //    this.movementInput = movementInput;
         
-        //Vector2 movePos;
-        //RectTransformUtility.ScreenPointToLocalPointInRectangle(parentCanvas.transform as RectTransform, movementInput, parentCanvas.worldCamera, out movePos);
+    //    //Vector2 movePos;
+    //    //RectTransformUtility.ScreenPointToLocalPointInRectangle(parentCanvas.transform as RectTransform, movementInput, parentCanvas.worldCamera, out movePos);
 
-        //Vector3 cursorPos = parentCanvas.transform.TransformPoint(movePos);
-        //paintSprite.transform.position = cursorPos;
+    //    //Vector3 cursorPos = parentCanvas.transform.TransformPoint(movePos);
+    //    //paintSprite.transform.position = cursorPos;
 
-        //transform.position = cursorPos;
-    }
+    //    //transform.position = cursorPos;
+    //}
 
-    public void SetSpriteVisible(bool isEnabled)
-    {
-        if(paintSprite.gameObject != null)
-            paintSprite.gameObject.SetActive(isEnabled);
-    }
+    //public void SetSpriteVisible(bool isEnabled)
+    //{
+    //    if(paintSprite.gameObject != null)
+    //        paintSprite.gameObject.SetActive(isEnabled);
+    //}
 
-    public void ChangeCursorSize()
-    {
-        paintSprite.rectTransform.sizeDelta = new Vector2((int)paintingSlider.value + 10, (int)paintingSlider.value + 10);
-    }
+    //public void ChangeCursorSize()
+    //{
+    //    paintSprite.rectTransform.sizeDelta = new Vector2((int)paintingSlider.value + 10, (int)paintingSlider.value + 10);
+    //}
 }

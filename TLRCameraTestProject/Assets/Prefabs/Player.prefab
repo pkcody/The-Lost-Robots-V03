@@ -5917,7 +5917,7 @@ MonoBehaviour:
   cursor: {fileID: 0}
   tex: {fileID: 0}
   radiusSlider: {fileID: 0}
-  cursorSpeed: 500
+  cursorSpeed: 300
   padding: 6
   radius: 10
   redColor: {r: 0.7411765, g: 0.3647059, b: 0, a: 1}

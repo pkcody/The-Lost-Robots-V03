@@ -19,6 +19,7 @@ public class PlayerSpawning : MonoBehaviour
     public Transform[] JoinSpawnPos = new Transform[4];
     public Transform[] MenuSpawnPos = new Transform[4];
     public Transform[] GameSpawnPos = new Transform[4];
+    public Transform[] TutorialSpawnPos = new Transform[4];
 
     public bool lockedIn = false;
 
@@ -30,6 +31,11 @@ public class PlayerSpawning : MonoBehaviour
 
     //tutorial
     public bool tutorialON = true;
+    public bool BIGTutorialON = true;
+
+    //Camera Boundries
+    public GameObject tutorialBoundary;
+    public GameObject gameBoundary;
 
 
     private void Awake()
@@ -70,11 +76,31 @@ public class PlayerSpawning : MonoBehaviour
                     print("calling");
                     go.GetComponent<PlayerInput>().defaultActionMap = "UI";
                 }
-                else if (tutorialON && SceneManager.GetActiveScene().name == "Game")
+                else if (BIGTutorialON && SceneManager.GetActiveScene().name == "Game") //
                 {
+                    tutorialBoundary = GameObject.Find("TutorialPlayerBoundries");
+
+                    go.GetComponent<PlayerInput>().SwitchCurrentActionMap("Player");
+                    go.GetComponent<PlayerInput>().defaultActionMap = "Player";
+                    go.GetComponent<PlayerPainting>().enabled = false;
+
+                    foreach (var cc in FindObjectsOfType<CinemachineConfiner>())
+                    {
+                        cc.m_BoundingVolume = tutorialBoundary.GetComponent<Collider>();
+                    }
+                }
+                else if (tutorialON && SceneManager.GetActiveScene().name == "Game") //
+                {
+                    gameBoundary = GameObject.Find("PlayerBoundries");
+
                     go.GetComponent<PlayerInput>().SwitchCurrentActionMap("TutorialMap");
                     go.GetComponent<PlayerInput>().defaultActionMap = "TutorialMap";
                     go.GetComponent<PlayerPainting>().enabled = false;
+
+                    foreach (var cc in FindObjectsOfType<CinemachineConfiner>())
+                    {
+                        cc.m_BoundingVolume = gameBoundary.GetComponent<Collider>();
+                    }
                 }
                 else if (!tutorialON && SceneManager.GetActiveScene().name == "Game")
                 {
@@ -99,15 +125,25 @@ public class PlayerSpawning : MonoBehaviour
             if (go != null)
             {
                 int Index = System.Array.IndexOf(players, go);
-                
+
 
 
                 if (SceneManager.GetActiveScene().name == "Game")
                 {
-                    
-                    targetbrain = FindObjectOfType<CinemachineTargetGroup>();
 
-                    go.transform.position = GameSpawnPos[Index].position;
+                    targetbrain = FindObjectOfType<CinemachineTargetGroup>();
+                    
+
+                    if (BIGTutorialON)
+                    {
+                        go.transform.position = TutorialSpawnPos[Index].position;
+
+                    }
+                    else
+                    {
+                        go.transform.position = GameSpawnPos[Index].position;
+
+                    }
                     go.GetComponent<CharacterMovement>().enabled = true;
                     go.GetComponent<CharacterMovement>().cinemachineTargetGroup = targetbrain;
 
@@ -124,6 +160,21 @@ public class PlayerSpawning : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void StartGameAfterTutorial()
+    {
+        BIGTutorialON = false;
+
+        //show time
+        MotherShipStory.instance.GameActuallyStarting();
+        GameObject storyMovies = GameObject.Find("StoryMovies");
+
+        storyMovies.transform.GetChild(0).gameObject.SetActive(true);
+        storyMovies.transform.GetChild(1).gameObject.SetActive(true);
+
+        ChangePlayerInput();
+        StartingPositions();
     }
 
     public void SetInitialPlayerValues()
@@ -158,12 +209,6 @@ public class PlayerSpawning : MonoBehaviour
 
                     }
                 }
-
-
-
-                //go.transform.GetChild(0).GetChild(0).GetComponent<MeshRenderer>().material = mats[Index];
-                //go.GetComponent<DisplayingInventory>().inventoryObj = inv[Index];
-
                 
             }
 

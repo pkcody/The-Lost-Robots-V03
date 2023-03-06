@@ -34,7 +34,7 @@ public class GridBreakdown : MonoBehaviour
     //#if UNITY_EDITOR
     public void GenerateGrid()
     {
-        numCellRowsCols = 1000 / cellPixelSize;
+        numCellRowsCols = 1000 / cellPixelSize; // at 100 then
 
         for (int row = 0; row < numCellRowsCols; row++)
         {

@@ -19,7 +19,7 @@ public class PlayerPainting : MonoBehaviour
     public Mouse virtualMouse;
     private Vector2 virtualMousePos;
     private bool prevMouseState;
-    public int cursorSpeed = 500;
+    public int cursorSpeed = 100;
     public float padding = 6f;
     public int radius = 10;
 
@@ -32,6 +32,9 @@ public class PlayerPainting : MonoBehaviour
     PointerEventData m_PointerEventData;
     EventSystem m_EventSystem;
 
+    Vector2 movementInput;
+    bool isTryingToPaint = false;
+    public int offset = 2;
 
     public void OnEnable()
     {
@@ -45,14 +48,18 @@ public class PlayerPainting : MonoBehaviour
             InputSystem.AddDevice(virtualMouse);
         }
 
+        
+
         InputUser.PerformPairingWithDevice(virtualMouse, GetComponent<PlayerInput>().user);
 
-        if(cursorTransform != null)
+        if (cursorTransform != null)
         {
             Vector2 position = cursorTransform.anchoredPosition;
             InputState.Change(virtualMouse, position);
         }
 
+        AnchorCursor(new Vector2(-940, -520));
+        ChangeRadiusSize();
         InputSystem.onAfterUpdate += UpdateMotion;
     }
     private void OnDisable()
@@ -60,12 +67,13 @@ public class PlayerPainting : MonoBehaviour
         InputSystem.RemoveDevice(virtualMouse);
         InputSystem.onAfterUpdate -= UpdateMotion;
     }
-    private void UpdateMotion()
+    public void UpdateMotion()
     {
-        if (virtualMouse == null || Gamepad.current == null)
+       // print("" + GetComponent<PlayerInput>().user + Gamepad.current + virtualMouse.name);
+        if (virtualMouse == null || (movementInput.x == 0 && movementInput.y == 0))
             return;
 
-        Vector2 deltaVal = Gamepad.current.leftStick.ReadValue();
+        Vector2 deltaVal = movementInput;
         deltaVal *= cursorSpeed * Time.deltaTime;
 
         Vector2 currPos = virtualMouse.position.ReadValue();
@@ -77,23 +85,58 @@ public class PlayerPainting : MonoBehaviour
         InputState.Change(virtualMouse.position, virtualMousePos);
         InputState.Change(virtualMouse.delta, deltaVal);
 
-        bool aButtonIsPressed = Gamepad.current.aButton.IsPressed();
-        
+        //bool aButtonIsPressed = Gamepad.current.aButton.IsPressed();
 
-        if (prevMouseState != aButtonIsPressed)
-        {
-            virtualMouse.CopyState<MouseState>(out var mouseState);
-            mouseState.WithButton(MouseButton.Left, aButtonIsPressed);
-            InputState.Change(virtualMouse, mouseState);
-            
-            prevMouseState = aButtonIsPressed;
-        }
 
-        if (aButtonIsPressed)
+        //if (prevMouseState != aButtonIsPressed)
+        //{
+        //    virtualMouse.CopyState<MouseState>(out var mouseState);
+        //    mouseState.WithButton(MouseButton.Left, aButtonIsPressed);
+        //    InputState.Change(virtualMouse, mouseState);
+
+        //    prevMouseState = aButtonIsPressed;
+        //}
+
+        if (isTryingToPaint)
             TryPaint();
 
         AnchorCursor(virtualMousePos);
     }
+    //}private void Update()
+    //{
+    //    print("" + GetComponent<PlayerInput>().user + Gamepad.current + virtualMouse.name);
+    //    if (virtualMouse == null || Gamepad.current == null)
+    //        return;
+
+    //    Vector2 deltaVal = Gamepad.current.leftStick.ReadValue();
+    //    deltaVal *= cursorSpeed * Time.deltaTime;
+
+    //    Vector2 currPos = virtualMouse.position.ReadValue();
+    //    virtualMousePos = currPos + deltaVal;
+
+    //    virtualMousePos.x = Mathf.Clamp(virtualMousePos.x, padding, Screen.width - padding);
+    //    virtualMousePos.y = Mathf.Clamp(virtualMousePos.y, padding, Screen.height - padding);
+
+    //    InputState.Change(virtualMouse.position, virtualMousePos);
+    //    InputState.Change(virtualMouse.delta, deltaVal);
+
+    //    bool aButtonIsPressed = Gamepad.current.aButton.IsPressed();
+        
+
+    //    if (prevMouseState != aButtonIsPressed)
+    //    {
+    //        virtualMouse.CopyState<MouseState>(out var mouseState);
+    //        mouseState.WithButton(MouseButton.Left, aButtonIsPressed);
+    //        InputState.Change(virtualMouse, mouseState);
+            
+    //        prevMouseState = aButtonIsPressed;
+    //    }
+
+    //    if (aButtonIsPressed)
+    //        TryPaint();
+
+    //    AnchorCursor(virtualMousePos);
+    //}
     private void TryPaint()
     {
         print("trying to paint");
@@ -169,17 +212,26 @@ public class PlayerPainting : MonoBehaviour
 
             else if(result.gameObject.name == "Handle")
             {
-                ChangeRadiusSize();
+                foreach(PlayerPainting p in FindObjectsOfType<PlayerPainting>())
+                {
+                    p.ChangeRadiusSize();
+                }
             }
             else if(result.gameObject.name == "ApplyTexture")
             {
                 FindObjectOfType<Painting>().SetTextureColor();
+                FindObjectOfType<PlayerSpawning>().BIGTutorialON = FindObjectOfType<ToggleTutorial>().tutorialOn;
+                
 
                 ScenesManager.instance.StartGameScene();
             }
             else if(result.gameObject.name == "ClearTexture")
             {
                 FindObjectOfType<Painting>().ClearTexture();
+            }
+            else if (result.gameObject.name == "TutorialBG")
+            {
+                FindObjectOfType<ToggleTutorial>().Toggle();
             }
         }
 
@@ -237,26 +289,30 @@ public class PlayerPainting : MonoBehaviour
 
     public void ChangeRadiusSize()
     {
-        radius = (int)radiusSlider.value;
+        
+        radiusSlider.value += movementInput.x;
+        radius = (int)radiusSlider.value / offset;
         cursor.paintSprite.rectTransform.sizeDelta = new Vector2((int)radiusSlider.value + 10, (int)radiusSlider.value + 10);
     }
 
     public void OnSelect(InputAction.CallbackContext ctx)
     {
-        //RaycastHit hit;
-        //Vector2 movePos;
-        //print(Input.mousePosition);
-        //print(cursor.paintSprite.rectTransform.anchoredPosition);
-        //RectTransformUtility.ScreenPointToLocalPointInRectangle(FindObjectOfType<Canvas>().transform as RectTransform, cursor.paintSprite.rectTransform.anchoredPosition, null, out movePos);
-        //Vector3 cursorPos = FindObjectOfType<Canvas>().transform.TransformPoint(movePos);
-        //print(cursorPos);
-        //Debug.DrawRay(Camera.main.transform.position, new Vector3(cursorPos.x, cursorPos.y, 100f), Color.red, 100f);
-        //if (!Physics.Raycast(Camera.main.ScreenPointToRay(cursorPos), out hit))
-        //    return;
-        //painting.PlayerSelecting(hit);
+        if(ctx.performed)
+        {
+            TryPaint();
+            return;
+        }
+
+        isTryingToPaint = true;
+
+        if (ctx.canceled)
+        {
+            isTryingToPaint = false;
+        }
+        
     }
     public void OnMoveCursor(InputAction.CallbackContext ctx) 
     {
-        //cursor.MoveCursor(ctx.ReadValue<Vector2>());
+        movementInput = ctx.ReadValue<Vector2>();
     }
 }

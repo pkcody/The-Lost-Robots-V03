@@ -17,6 +17,7 @@ TagManager:
   - HoldItem
   - FixItEncounter
   - TutorialScript
+  - TutorialPlayThrough
   layers:
   - Default
   - TransparentFX
@@ -31,7 +32,7 @@ TagManager:
   - TowersLocation
   - MapBorders
   - PushOver
-  - 
+  - Boundary
   - 
   - 
   - Post Processing

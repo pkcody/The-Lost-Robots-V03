@@ -507,7 +507,7 @@ public class CharacterMovement : MonoBehaviour
         {
             foreach (var cm in FindObjectsOfType<CharacterMovement>())
             {
-                cm.transform.position = new Vector3(transform.position.x, 30f, transform.position.z);
+                cm.transform.position = new Vector3(transform.position.x, 10f, transform.position.z);
                 cm.inRangeMonster = false;
                 cm.inRangeResource = false;
                 cm.inRangeCrafting = false;
@@ -634,6 +634,10 @@ public class CharacterMovement : MonoBehaviour
         {
             inRangeHold = true;
             itemToHold = collision.gameObject.transform;
+        }
+        if (collision.GetComponent<Collider>().tag == "TutorialPlayThrough")
+        {
+            MotherShipSubTitles.instance.TutorialSpeak(collision.gameObject);
         }
 
     }

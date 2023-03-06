@@ -54,18 +54,24 @@ public class TowerProgress : MonoBehaviour
         {
             FindObjectOfType<TowerSoundEffect>().firstTime1 = false;
             FindObjectOfType<TowerSoundEffect>().PlayTower1Sound();
+            MotherShipSubTitles.instance.GameSubT(2);
+
             FindObjectOfType<Mothership>().tower1 = true;
         }
         else if (index == 1)
         {
             FindObjectOfType<TowerSoundEffect>().firstTime2 = false;
             FindObjectOfType<TowerSoundEffect>().PlayTower2Sound();
+            MotherShipSubTitles.instance.GameSubT(3);
+
             FindObjectOfType<Mothership>().tower2 = true;
         }
         else if (index == 2)
         {
             FindObjectOfType<TowerSoundEffect>().firstTime3 = false;
             FindObjectOfType<TowerSoundEffect>().PlayTower3Sound();
+            MotherShipSubTitles.instance.GameSubT(4);
+
             FindObjectOfType<Mothership>().tower3 = true;
         }
     }

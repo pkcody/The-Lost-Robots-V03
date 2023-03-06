@@ -18,6 +18,10 @@ public class CharHoldItem : MonoBehaviour
     public GameObject Battery_obj;
     public bool batteryInRange;
 
+    //button
+    public bool inRangeTB = false;
+    public ButtonPush bp_;
+
     private void FixedUpdate()
     {
         if(currentHold == null)
@@ -175,7 +179,11 @@ public class CharHoldItem : MonoBehaviour
                     }
                 }
             }
-            
+
+            if (inRangeTB)
+            {
+                bp_.TryButtonPush(GetComponent<PlayerInput>().user.index + 1);
+            }
         }
     }
 
@@ -191,7 +199,12 @@ public class CharHoldItem : MonoBehaviour
             {
                 batteryInRange = false;
             }
-            
+            if (collision.name.Contains("ButtonPush"))
+            {
+                inRangeTB = false;
+                bp_ = null;
+
+            }
 
         }
 
@@ -215,6 +228,11 @@ public class CharHoldItem : MonoBehaviour
                 Battery_obj = collision.gameObject;
                 batteryInRange = true;
                 BatteryEncounter();
+            }
+            if (collision.name.Contains("ButtonPush"))
+            {
+                inRangeTB = true;
+                bp_ = collision.GetComponent<ButtonPush>();
             }
             
         }
