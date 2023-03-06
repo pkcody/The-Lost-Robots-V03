@@ -49,14 +49,15 @@ public class Mothership : MonoBehaviour
                 rm.MotherRobotSpeak("Yayyyy we did it!!!!!");
             }
 
-            storyMovies.transform.GetChild(2).gameObject.SetActive(true);
-            storyMovies.transform.GetChild(3).gameObject.SetActive(true);
+            
         }
         else 
         {
             MotherShipStory.instance.MSTalk("Outro_" + itemsRecieved);
         }
     }
+
+    
 
     public void ToCreditScene()
     {
@@ -144,12 +145,28 @@ public class Mothership : MonoBehaviour
                 {
                     MotherShipStory.instance.MSTalk("Outro_Thankyou");
                     MotherShipSubTitles.instance.GameSubT(6);
+                    //play videos
+                    StartCoroutine(PlayVideo());
 
-                    Invoke("ToCreditScene", 10f);
+                    //Invoke("ToCreditScene", 8f);
                 }
             }
         }
         
+    }
+
+    IEnumerator PlayVideo()
+    {
+        storyMovies.transform.GetChild(2).gameObject.SetActive(true);
+
+        yield return new WaitForSeconds(4f);
+        storyMovies.transform.GetChild(2).gameObject.SetActive(false);
+        storyMovies.transform.GetChild(3).gameObject.SetActive(true);
+
+        yield return new WaitForSeconds(4f);
+        storyMovies.transform.GetChild(3).gameObject.SetActive(false);
+        ToCreditScene();
+
     }
 
     private void Update()

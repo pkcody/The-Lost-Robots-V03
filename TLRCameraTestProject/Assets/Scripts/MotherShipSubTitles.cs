@@ -83,8 +83,8 @@ public class MotherShipSubTitles : MonoBehaviour
         }
         else if (go.name.Contains("Inv_Platform"))
         {
-            response = "To open and close your robots inventory press 'Y' then once it is open use your left and right bumpers to scroll. The top three slots are for robot upgrades. The next two rows are inventory space. AND NO you are tiny robots so stuff cannot stack. Anyways, the two paper scripts on the side are programming upgrades. First try dropping your " +
-                "Weak Wire by pressing the 'Down Arrow' then after a moment repickup the item. Then try using the item by hitting the 'Up Arrow'. Consuming these wires will heal yourself if you ever get damanged and I'm not around to help you.";
+            response = "Press 'Y' for your inventory. To scroll use the bumpers. The top three slots are for robot upgrades. The next two rows are inventory space. The two paper scripts on the side are programming upgrades. First try dropping your " +
+                "Weak Wire by pressing the 'Down Arrow' then pick it up again. Now try 'using' the item by hitting the 'Up Arrow'. Consuming wires heals you and friends.";
             TryMSSpeak(response);
         }
         else if (go.name.Contains("Fix_Platform"))

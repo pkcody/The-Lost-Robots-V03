@@ -99,7 +99,7 @@ public class MotherShipStory : MonoBehaviour
         print(SceneManager.GetActiveScene().name);
         if (SceneManager.GetActiveScene().name == "MainMenu")
         {
-            print("main tlak");
+            //print("main tlak");
             painting = GameObject.FindObjectOfType<Painting>(true).gameObject;
             MSTalk("Intro_wonderful");
 
@@ -120,8 +120,14 @@ public class MotherShipStory : MonoBehaviour
     {
         MSTalk("Paint_OhNo");
         MotherShipSubTitles.instance.GameSubT(1);
+        StartCoroutine(DelayCrash());
+    }
 
+    IEnumerator DelayCrash()
+    {
+        yield return new WaitForSeconds(16f);
         MSTalk("Crash");
+
     }
 
 }

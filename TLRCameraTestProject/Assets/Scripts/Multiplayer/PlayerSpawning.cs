@@ -173,8 +173,27 @@ public class PlayerSpawning : MonoBehaviour
         storyMovies.transform.GetChild(0).gameObject.SetActive(true);
         storyMovies.transform.GetChild(1).gameObject.SetActive(true);
 
+        StartCoroutine(DisableVideo0());
+        StartCoroutine(DisableVideo1());
+
         ChangePlayerInput();
         StartingPositions();
+
+    }
+
+    IEnumerator DisableVideo0()
+    {
+        GameObject storyMovies = GameObject.Find("StoryMovies");
+
+        yield return new WaitForSeconds(16f);
+        storyMovies.transform.GetChild(0).gameObject.SetActive(false);
+    }
+    IEnumerator DisableVideo1()
+    {
+        GameObject storyMovies = GameObject.Find("StoryMovies");
+
+        yield return new WaitForSeconds(18f);
+        storyMovies.transform.GetChild(1).gameObject.SetActive(false);
     }
 
     public void SetInitialPlayerValues()
