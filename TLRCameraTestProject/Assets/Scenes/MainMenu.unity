@@ -4651,6 +4651,8 @@ MonoBehaviour:
   - {fileID: 0}
   tutorialON: 1
   BIGTutorialON: 1
+  tutorialBoundary: {fileID: 0}
+  gameBoundary: {fileID: 0}
 --- !u!1 &1328168303
 GameObject:
   m_ObjectHideFlags: 0
@@ -5199,7 +5201,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 100126904}
         m_TargetAssemblyTypeName: ScenesManager, Assembly-CSharp
-        m_MethodName: StartGameScene
+        m_MethodName: ContinueToGameScene
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

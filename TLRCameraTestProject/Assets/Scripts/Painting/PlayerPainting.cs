@@ -85,58 +85,13 @@ public class PlayerPainting : MonoBehaviour
         InputState.Change(virtualMouse.position, virtualMousePos);
         InputState.Change(virtualMouse.delta, deltaVal);
 
-        //bool aButtonIsPressed = Gamepad.current.aButton.IsPressed();
-
-
-        //if (prevMouseState != aButtonIsPressed)
-        //{
-        //    virtualMouse.CopyState<MouseState>(out var mouseState);
-        //    mouseState.WithButton(MouseButton.Left, aButtonIsPressed);
-        //    InputState.Change(virtualMouse, mouseState);
-
-        //    prevMouseState = aButtonIsPressed;
-        //}
 
         if (isTryingToPaint)
             TryPaint();
 
         AnchorCursor(virtualMousePos);
     }
-    //}private void Update()
-    //{
-    //    print("" + GetComponent<PlayerInput>().user + Gamepad.current + virtualMouse.name);
-    //    if (virtualMouse == null || Gamepad.current == null)
-    //        return;
 
-    //    Vector2 deltaVal = Gamepad.current.leftStick.ReadValue();
-    //    deltaVal *= cursorSpeed * Time.deltaTime;
-
-    //    Vector2 currPos = virtualMouse.position.ReadValue();
-    //    virtualMousePos = currPos + deltaVal;
-
-    //    virtualMousePos.x = Mathf.Clamp(virtualMousePos.x, padding, Screen.width - padding);
-    //    virtualMousePos.y = Mathf.Clamp(virtualMousePos.y, padding, Screen.height - padding);
-
-    //    InputState.Change(virtualMouse.position, virtualMousePos);
-    //    InputState.Change(virtualMouse.delta, deltaVal);
-
-    //    bool aButtonIsPressed = Gamepad.current.aButton.IsPressed();
-        
-
-    //    if (prevMouseState != aButtonIsPressed)
-    //    {
-    //        virtualMouse.CopyState<MouseState>(out var mouseState);
-    //        mouseState.WithButton(MouseButton.Left, aButtonIsPressed);
-    //        InputState.Change(virtualMouse, mouseState);
-            
-    //        prevMouseState = aButtonIsPressed;
-    //    }
-
-    //    if (aButtonIsPressed)
-    //        TryPaint();
-
-    //    AnchorCursor(virtualMousePos);
-    //}
     private void TryPaint()
     {
         print("trying to paint");

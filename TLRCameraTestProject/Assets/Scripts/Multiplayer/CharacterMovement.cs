@@ -61,8 +61,11 @@ public class CharacterMovement : MonoBehaviour
     //Crafting
     [Header("Crafting")]
     public GameObject craftBTImage;
-    public GameObject craftTablePanel;
     public GameObject craftTableText;
+
+    public GameObject craftTablePanel;
+    public GameObject craftArm1;
+    public GameObject craftArm2;
 
     public List<ItemObject> AttemptedRecipe = new List<ItemObject>();
     private List<int> itemRow1Save = new List<int>();
@@ -88,6 +91,7 @@ public class CharacterMovement : MonoBehaviour
     public int playerHealthMaxInt;
     public Sprite FullHealth;
     public Sprite DmgdHealth;
+    public bool playerInvicOn = false;
 
     // camera stuff
     [Header("Camera Stuff")]
@@ -222,11 +226,25 @@ public class CharacterMovement : MonoBehaviour
                     {
                         craftTablePanel = item.gameObject;
                     }
-                    
+                    if (item.name.Contains("Arm1"))
+                    {
+                        craftArm1 = item.gameObject;
+                    }
+                    if (item.name.Contains("Arm2"))
+                    {
+                        craftArm2 = item.gameObject;
+                    }
+
                 }
 
                 craftBTImage.SetActive(false);
+
                 craftTablePanel.SetActive(true);
+                craftTablePanel.GetComponent<Animation>().Play("PanelAnim");
+                craftArm1.GetComponent<Animation>().Play("Arm1Anim");
+                craftArm2.GetComponent<Animation>().Play("Arm2Anim");
+
+
                 craftTableText.SetActive(true);
 
                 CraftingSlots.Clear();
@@ -587,7 +605,33 @@ public class CharacterMovement : MonoBehaviour
         }
 
     }
-    
+
+    public void OnTriggerStay(Collider collision)
+    {
+        if (collision.GetComponent<Collider>().tag == "MonsterEncounter")
+        {
+            if (monster_obj.GetComponentInChildren<Animator>().GetBool("attack"))
+            {
+                if (!playerInvicOn)
+                {
+                    PlayerTakeDamage();
+                    StartCoroutine(PlayerInvinc());
+
+                }
+            }
+        }
+    }
+
+    IEnumerator PlayerInvinc()
+    {
+        playerInvicOn = true;
+
+        yield return new WaitForSeconds(1.5f);
+
+        playerInvicOn = false;
+        
+    }
+
     public void OnTriggerEnter(Collider collision)
     {
         print(collision.name);
@@ -603,11 +647,11 @@ public class CharacterMovement : MonoBehaviour
             //monsterMain_obj = collision.gameObject;
             monster_obj = collision.transform.parent.gameObject;
             inRangeMonster = true;
-            if (monster_obj.GetComponentInChildren<Animator>().GetBool("attack"))
-            {
-                PlayerTakeDamage();
+            //if (monster_obj.GetComponentInChildren<Animator>().GetBool("attack"))
+            //{
+            //    PlayerTakeDamage();
 
-            }
+            //}
             //boarder
             MonsterAttackBoarder.SetActive(true);
         }

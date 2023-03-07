@@ -5,45 +5,49 @@ using UnityEngine.AI;
 
 public class WalkingBehavior : StateMachineBehaviour
 {
-    float timer;
-    List<Transform> waypoints = new List<Transform>();
-    NavMeshAgent agent;
-    Transform player;
-    float chaseRange = 20f;
+    public float timer;
+    public List<Transform> waypoints = new List<Transform>();
+    public NavMeshAgent agent;
+    public Transform player;
+    public float chaseRange = 20f;
 
-    float closestPlayerDist = float.PositiveInfinity;
-    Transform closestTrans;
+    public Transform closestTrans;
 
-
+    public CharacterMovement[] cms;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         timer = 0;
-        foreach (Transform t in animator.transform.root.GetChild(1).GetComponentsInChildren<Transform>())
+        foreach (Transform t in animator.transform.parent.parent.GetChild(0).GetComponentsInChildren<Transform>())
         {
             waypoints.Add(t);
         }
 
         agent = animator.transform.parent.GetComponent<NavMeshAgent>();
         agent.SetDestination(waypoints[0].position);
-        closestTrans = FindObjectOfType<CharacterMovement>().transform;
+        //closestTrans = FindObjectOfType<CharacterMovement>().transform;
+        if (cms.Length == 0)
+        {
+            cms = FindObjectsOfType<CharacterMovement>();
+        }
 
-        
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        float closestPlayerDist = float.PositiveInfinity;
+
         if (agent.remainingDistance <= agent.stoppingDistance)
         {
             agent.SetDestination(waypoints[Random.Range(0, waypoints.Count)].position);
         }
         timer += Time.deltaTime;
 
-        foreach (CharacterMovement cm in FindObjectsOfType<CharacterMovement>())
+        foreach (CharacterMovement cm in cms)
         {
-            float _distance = Vector3.Distance(cm.transform.position, animator.transform.root.position);
+            float _distance = Vector3.Distance(cm.transform.position, agent.transform.position);
             if (_distance < closestPlayerDist)
             {
                 closestPlayerDist = _distance;

@@ -48,6 +48,7 @@ public class EnemyMove : MonoBehaviour
             }
             else
             {
+                animator.SetBool("attack", false);
                 animator.SetTrigger("takedmg");
 
             }
@@ -96,7 +97,7 @@ public class EnemyMove : MonoBehaviour
 
     void DestroyEnemy()
     {
-        Destroy(transform.parent.gameObject);
+        Destroy(transform.parent.parent.gameObject);
         
     }
 

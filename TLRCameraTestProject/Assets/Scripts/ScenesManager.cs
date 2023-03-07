@@ -37,6 +37,15 @@ public class ScenesManager : MonoBehaviour
             SceneManager.LoadScene("Game");
         }
     }
+    public void ContinueToGameScene()
+    {
+        if (PlayerSpawning.instance.players[0] != null)
+        {
+            FindObjectOfType<PlayerSpawning>().BIGTutorialON = false;
+
+            SceneManager.LoadScene("Game");
+        }
+    }
 
     public void GoMainMenuScene()
     {

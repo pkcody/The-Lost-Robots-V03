@@ -1,35 +1,43 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
+
 
 public class IdleBehavior : StateMachineBehaviour
 {
-    float timer;
-    Transform player;
-    float chaseRange = 20;
+    public NavMeshAgent agent;
 
-    float closestPlayerDist = float.PositiveInfinity;
-    Transform closestTrans;
+    public float timer;
+    public Transform player;
+    public float chaseRange = 20;
+    public Transform closestTrans;
 
-
+    public CharacterMovement[] cms;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        timer = 0;
-        closestTrans = FindObjectOfType<CharacterMovement>().transform;
+        agent = animator.transform.parent.GetComponent<NavMeshAgent>();
 
-        
+        timer = 0;
+        //closestTrans = FindObjectOfType<CharacterMovement>().transform;
+        if (cms.Length == 0)
+        {
+            cms = FindObjectsOfType<CharacterMovement>();
+        }
+
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        float closestPlayerDist = float.PositiveInfinity;
         timer += Time.deltaTime;
 
-        foreach (CharacterMovement cm in FindObjectsOfType<CharacterMovement>())
+        foreach (CharacterMovement cm in cms)
         {
-            float _distance = Vector3.Distance(cm.transform.position, animator.transform.root.position);
+            float _distance = Vector3.Distance(cm.transform.position, agent.transform.position);
             if (_distance < closestPlayerDist)
             {
                 closestPlayerDist = _distance;
