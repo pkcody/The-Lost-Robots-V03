@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5693889623811126823}
   - component: {fileID: 5693889623811126822}
   - component: {fileID: 1854026309306689186}
+  - component: {fileID: 7151205543051250530}
   m_Layer: 0
   m_Name: HarvestBlue_1
   m_TagString: ResourceEncounter
@@ -62,6 +63,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   resource: {fileID: 0}
+--- !u!136 &7151205543051250530
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5693889623811126824}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 1.6788931
+  m_Height: 3.3577862
+  m_Direction: 1
+  m_Center: {x: 0, y: 1.8211298, z: -0.05020237}
 --- !u!1 &5693889624594108457
 GameObject:
   m_ObjectHideFlags: 0
