@@ -52,6 +52,8 @@ public class KnowledgeScriptAbility : MonoBehaviour
                 tsp.tutorialON = false;
 
             }
+            MotherShipSubTitles.instance.GameSubT(2);
+
             transform.root.GetComponent<RobotMessaging>().TowerRobotSpeak("Can you hear that static? I think it's trying to say something. Maybe if we make more towers we could clear it up.");
 
             Destroy(gameObject);

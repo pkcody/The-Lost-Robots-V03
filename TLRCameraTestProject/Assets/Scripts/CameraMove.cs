@@ -33,18 +33,25 @@ public class CameraMove : MonoBehaviour
     }
     private void Update()
     {
-        foreach (Transform pos in allPlayerPos)
+        try
         {
-            averageAllPlayerDist += (pos.position - cinemachineTargetGroup.transform.position).magnitude;
+            foreach (Transform pos in allPlayerPos)
+            {
+                averageAllPlayerDist += (pos.position - cinemachineTargetGroup.transform.position).magnitude;
+            }
+            averageAllPlayerDist /= allPlayerPos.Count;
+            if (averageAllPlayerDist > middle)
+            {
+                GetCamHigh();
+            }
+            else
+            {
+                GetCamLow();
+            }
         }
-        averageAllPlayerDist /= allPlayerPos.Count;
-        if (averageAllPlayerDist > middle)
+        catch
         {
-            GetCamHigh();
-        }
-        else
-        {
-            GetCamLow();
+            print("hacky");
         }
     }
 }

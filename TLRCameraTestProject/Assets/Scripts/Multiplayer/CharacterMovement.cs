@@ -238,14 +238,7 @@ public class CharacterMovement : MonoBehaviour
                 }
 
                 craftBTImage.SetActive(false);
-
-                craftTablePanel.SetActive(true);
-                craftTablePanel.GetComponent<Animation>().Play("PanelAnim");
-                craftArm1.GetComponent<Animation>().Play("Arm1Anim");
-                craftArm2.GetComponent<Animation>().Play("Arm2Anim");
-
-
-                craftTableText.SetActive(true);
+                StartCoroutine(CraftTableAnimation(1));
 
                 CraftingSlots.Clear();
 
@@ -285,6 +278,8 @@ public class CharacterMovement : MonoBehaviour
             {
                 try
                 {
+                    animator.Play("AttackRobot", 0, 0f);
+
                     resourceSlider = resource_obj.transform.GetComponentInChildren<Slider>();
                     resourceSlider.value -= 1;
                     if (resourceSlider.value == 0)
@@ -569,17 +564,69 @@ public class CharacterMovement : MonoBehaviour
         
     }
     
+    IEnumerator CraftTableAnimation(int i)
+    {
+        if (i == 1)
+        {
+            craftArm1.SetActive(true);
+            craftArm2.SetActive(true);
+
+            craftArm1.GetComponent<Animation>().Play("Arm1Anim");
+            craftArm2.GetComponent<Animation>().Play("Arm2Anim");
+            yield return new WaitForSeconds(0.5f);
+
+
+            craftTablePanel.SetActive(true);
+            craftTablePanel.GetComponent<Animation>().Play("PanelAnim");
+
+            yield return new WaitForSeconds(2f);
+
+            craftTableText.SetActive(true);
+
+
+        }
+        if (i == 2)
+        {
+            if (craftTableText != null)
+                craftTableText.SetActive(false);
+            yield return new WaitForSeconds(0.5f);
+            if (craftTablePanel != null)
+            {
+                craftTablePanel.GetComponent<Animation>().Play("PanelAnim_Reverse");
+
+            }
+            yield return new WaitForSeconds(0.5f);
+            if (craftTablePanel != null)
+                craftTablePanel.SetActive(false);
+
+            if (craftArm1 != null)
+            {
+                craftArm1.GetComponent<Animation>().Play("Arm1Anim_Reverse");
+                craftArm2.GetComponent<Animation>().Play("Arm2Anim_Reverse");
+            }
+            
+            yield return new WaitForSeconds(2f);
+
+
+            if (craftArm1 != null)
+                craftArm1.SetActive(false);
+            if (craftArm2 != null)
+                craftArm2.SetActive(false);
+        }
+
+    }
+
     public void OnTriggerExit(Collider collision)
     {
         if (collision.GetComponent<Collider>().tag == "TowerCraftingEncounter")
         {
             inRangeCrafting = false;
-            if(craftBTImage != null)
+
+            StartCoroutine(CraftTableAnimation(2));
+
+            if (craftBTImage != null)
                 craftBTImage.SetActive(true);
-            if (craftTablePanel != null)
-                craftTablePanel.SetActive(false);
-            if (craftTableText != null)
-                craftTableText.SetActive(false);
+            
         }
         if (collision.GetComponent<Collider>().tag == "MonsterEncounter")
         {

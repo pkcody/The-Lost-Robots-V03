@@ -7,10 +7,11 @@ public class ChaseBehavior : StateMachineBehaviour
 {
     public NavMeshAgent agent;
     public Transform player;
-    float attackRange = 1.7f;
+    float attackRange = 2.6f;
     float chaseRange = 20f;
 
     public Transform closestTrans;
+    public float closestPlayerDist;
 
     public CharacterMovement[] cms;
 
@@ -29,7 +30,7 @@ public class ChaseBehavior : StateMachineBehaviour
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        float closestPlayerDist = float.PositiveInfinity;
+        closestPlayerDist = float.PositiveInfinity;
         foreach (CharacterMovement cm in cms)
         {
             float _distance = Vector3.Distance(cm.transform.position, agent.transform.position);
@@ -41,7 +42,15 @@ public class ChaseBehavior : StateMachineBehaviour
         }
         player = closestTrans;
 
-        agent.SetDestination(player.position);
+        try
+        {
+            agent.SetDestination(player.position);
+
+        }
+        catch
+        {
+
+        }
 
 
         //Debug.Log(closestPlayerDist + "c");
@@ -61,7 +70,15 @@ public class ChaseBehavior : StateMachineBehaviour
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        agent.SetDestination(agent.transform.position);
+        try
+        {
+            agent.SetDestination(agent.transform.position);
+
+        }
+        catch
+        {
+            
+        }
     }
 
     // OnStateMove is called right after Animator.OnAnimatorMove()

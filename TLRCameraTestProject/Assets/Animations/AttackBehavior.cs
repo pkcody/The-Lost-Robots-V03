@@ -7,7 +7,7 @@ public class AttackBehavior : StateMachineBehaviour
 {
     public NavMeshAgent agent;
     public Transform player;
-    float attackRangeNO = 1.7f;
+    float attackRangeNO = 2.6f;
     public Transform closestTrans;
 
     public CharacterMovement[] cms;

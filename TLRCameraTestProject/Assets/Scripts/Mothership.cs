@@ -23,9 +23,16 @@ public class Mothership : MonoBehaviour
     public int robBoardedNum = 0;
 
     //particles
+    public GameObject smokeParticle;
+    public GameObject liftOffAnim;
     public GameObject locationIcon;
 
     public GameObject storyMovies;
+
+    //Camera
+    public GameObject LeavePlanetCamera;
+    public GameObject MainCamera;
+    public int playcount = 0;
 
     private void Start()
     {
@@ -33,7 +40,7 @@ public class Mothership : MonoBehaviour
         locationIcon.SetActive(false);
 
         storyMovies = GameObject.Find("StoryMovies");
-
+        playcount = PlayerInputManager.instance.playerCount;
     }
     public void TryMotherShipEnd()
     {
@@ -141,11 +148,17 @@ public class Mothership : MonoBehaviour
             {
                 Destroy(other.gameObject);
                 robBoardedNum++;
-                if (robBoardedNum == PlayerInputManager.instance.playerCount)
+
+                if (robBoardedNum == playcount)
                 {
                     MotherShipStory.instance.MSTalk("Outro_Thankyou");
                     MotherShipSubTitles.instance.GameSubT(6);
                     //play videos
+                    //mothership animation and change camera
+                    LeavePlanetCamera.SetActive(true);
+                    LeavePlanetCamera.tag = "MainCamera";
+                    MainCamera.tag = "Untagged";
+                    print("try to leave please");
                     StartCoroutine(PlayVideo());
 
                     //Invoke("ToCreditScene", 8f);
@@ -157,14 +170,20 @@ public class Mothership : MonoBehaviour
 
     IEnumerator PlayVideo()
     {
+        smokeParticle.SetActive(true);
+        liftOffAnim.GetComponent<Animation>().Play("LiftOff");
+
+        yield return new WaitForSeconds(6f);
+
         storyMovies.transform.GetChild(2).gameObject.SetActive(true);
 
-        yield return new WaitForSeconds(4f);
-        storyMovies.transform.GetChild(2).gameObject.SetActive(false);
-        storyMovies.transform.GetChild(3).gameObject.SetActive(true);
 
-        yield return new WaitForSeconds(4f);
-        storyMovies.transform.GetChild(3).gameObject.SetActive(false);
+        yield return new WaitForSeconds(6f);
+        storyMovies.transform.GetChild(3).gameObject.SetActive(true);
+        storyMovies.transform.GetChild(2).gameObject.SetActive(false);
+
+        yield return new WaitForSeconds(3f);
+        //storyMovies.transform.GetChild(3).gameObject.SetActive(false);
         ToCreditScene();
 
     }

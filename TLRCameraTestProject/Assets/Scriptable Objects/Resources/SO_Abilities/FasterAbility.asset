@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab: {fileID: 5956543174570430323, guid: 0683163e014460f40bd76e0e0572c3bc, type: 3}
   type: 3
-  UIimage: {fileID: 21300000, guid: 6c89c6479c423314a937370c9561f3d5, type: 3}
+  UIimage: {fileID: 21300000, guid: b50e9de3cec793f4695c280399478873, type: 3}
   description: Speed Script
   amountBonus: 0
   forWhat: 0

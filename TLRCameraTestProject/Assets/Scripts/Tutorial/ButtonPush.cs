@@ -18,7 +18,7 @@ public class ButtonPush : MonoBehaviour
 
     public void TryButtonPush(int playerIndex)
     {
-        print("pushing");
+        //print("pushing");
         if (playerIndex == num)
         {
 

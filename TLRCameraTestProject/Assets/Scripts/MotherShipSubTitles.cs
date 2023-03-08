@@ -50,15 +50,22 @@ public class MotherShipSubTitles : MonoBehaviour
 
     public void TryMSSpeak(string s)
     {
-        //if (coroutine != null)
-        //{
-        //    StopCoroutine(coroutine);
-
-        //}
+        
         if(chatBoxPar.activeSelf == false)
         {
             coroutine = StartCoroutine(DisplayLine(s));
 
+        }
+
+    }
+
+    public void StopMSC()
+    {
+        if (coroutine != null)
+        {
+            StopCoroutine(coroutine);
+            text.gameObject.SetActive(false);
+            chatBoxPar.gameObject.SetActive(false);
         }
 
     }
@@ -77,15 +84,20 @@ public class MotherShipSubTitles : MonoBehaviour
         }
         else if (go.name.Contains("Craft_Platform"))
         {
-            response = "Roll up to the crafting platform and one robot at a time can 'interact' (X) with the crafting table. I shall have you practice crafting a 'Weak Wire'. First use your left and right arrow keys to scroll through your crafting object. Then when you find 'Weak Wire' press up on the arrow key to craft." +
-                " To understand more about your inventory go to the next platform.";
-            TryMSSpeak(response);
+            response = "Roll up to the crafting platform and one robot at a time can 'interact' (X) with the crafting table. I shall have you practice crafting a 'Weak Wire'. First use your left and right arrow keys to scroll through your crafting object. ";
+            string response2 = "Then when you find 'Weak Wire' press up on the arrow key to craft. To understand more about your inventory go to the next platform.";
+            
+            TryMSSpeak2(response, response2);
         }
         else if (go.name.Contains("Inv_Platform"))
         {
-            response = "Press 'Y' for your inventory. To scroll use the bumpers. The top three slots are for robot upgrades. The next two rows are inventory space. The two paper scripts on the side are programming upgrades. First try dropping your " +
-                "Weak Wire by pressing the 'Down Arrow' then pick it up again. Now try 'using' the item by hitting the 'Up Arrow'. Consuming wires heals you and friends.";
-            TryMSSpeak(response);
+
+            response = "Press 'Y' for your inventory. To scroll use the bumpers. The top three slots are for robot upgrades. The next two rows are inventory space. The two paper scripts on the side are programming upgrades.";
+                
+            string response2 = "First try dropping your Weak Wire by pressing the 'Down Arrow' then pick it up again. Now try 'using' the item by hitting the 'Up Arrow'. Consuming wires heals you and friends.";
+
+
+            TryMSSpeak2(response, response2);
         }
         else if (go.name.Contains("Fix_Platform"))
         {
@@ -99,6 +111,7 @@ public class MotherShipSubTitles : MonoBehaviour
         }
         else if(go.name.Contains("ReadyGo_Platform"))
         {
+            StopMSC();
             response = "Sometimes object will need you to interact with them in a different way like these buttons. To exit to the front of the Mothership interact with these buttons by pressing Right Trigger to Ready Up!";
             TryMSSpeak(response);
         }
@@ -106,7 +119,42 @@ public class MotherShipSubTitles : MonoBehaviour
 
 
     }
+    public void TryMSSpeak2(string s, string s2)
+    {
 
+        if (chatBoxPar.activeSelf == false)
+        {
+            coroutine = StartCoroutine(FinishSentence(s, s2));
+
+        }
+
+    }
+
+    IEnumerator FinishSentence(string line, string line2)
+    {
+        text.text = " ";
+        text.gameObject.SetActive(true);
+        chatBoxPar.gameObject.SetActive(true);
+        //line 1
+        foreach (char letter in line.ToCharArray())
+        {
+            text.text += letter;
+            yield return new WaitForSeconds(typingSpeed);
+        }
+        yield return new WaitForSeconds(5f);
+        //line 2
+        text.text = " ";
+
+        foreach (char letter in line2.ToCharArray())
+        {
+            text.text += letter;
+            yield return new WaitForSeconds(typingSpeed);
+        }
+        yield return new WaitForSeconds(5f);
+
+        text.gameObject.SetActive(false);
+        chatBoxPar.gameObject.SetActive(false);
+    }
 
     public void JoinSubT()
     {
@@ -118,11 +166,13 @@ public class MotherShipSubTitles : MonoBehaviour
     {
         if (i == 1)
         {
+            StopMSC();
             response = "Wonderful, now, let’s begin the process to find a world to explore.";
             TryMSSpeak(response);
         }
         else if (i == 2)
         {
+            StopMSC();
             response = "Go ahead and draw out the planet you wish to visit today.";
             TryMSSpeak(response);
         }
@@ -133,6 +183,7 @@ public class MotherShipSubTitles : MonoBehaviour
     {
         if (i == 1)
         {
+            StopMSC();
             response = "Oh no there's been a malfunction. Robots hold on tight; this won't be a calculated landing.";
             TryMSSpeak(response);
         }
@@ -149,6 +200,7 @@ public class MotherShipSubTitles : MonoBehaviour
         }
         else if (i == 4)
         {
+            StopMSC();
             response = "This is Mothership. My lost robots, I need a Window, a full canister of H2O, " +
                 "and a plated quadruple battery. If you can her us, please bring the items to help!";
             TryMSSpeak(response);
@@ -167,6 +219,7 @@ public class MotherShipSubTitles : MonoBehaviour
 
     public void EndSubT()
     {
+        StopMSC();
         response = "Robots do a quick reset then we can look to explore the next planet.";
         TryMSSpeak(response);
     }

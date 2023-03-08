@@ -22,6 +22,9 @@ public class Painting : MonoBehaviour
 
     private void OnEnable()
     {
+        tex = rend.material.mainTexture as Texture2D;
+
+        ClearTexture();
         StartCoroutine(MotherShipStory.instance.PaintingCommentary());
         MotherShipSubTitles.instance.MainMenuSubT(2);
 

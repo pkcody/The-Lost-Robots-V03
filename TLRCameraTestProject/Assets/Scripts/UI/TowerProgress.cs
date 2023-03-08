@@ -54,7 +54,6 @@ public class TowerProgress : MonoBehaviour
         {
             FindObjectOfType<TowerSoundEffect>().firstTime1 = false;
             FindObjectOfType<TowerSoundEffect>().PlayTower1Sound();
-            MotherShipSubTitles.instance.GameSubT(2);
 
             FindObjectOfType<Mothership>().tower1 = true;
         }
