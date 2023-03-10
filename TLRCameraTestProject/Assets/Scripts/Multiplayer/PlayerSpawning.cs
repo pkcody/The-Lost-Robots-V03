@@ -88,6 +88,9 @@ public class PlayerSpawning : MonoBehaviour
                     {
                         cc.m_BoundingVolume = tutorialBoundary.GetComponent<Collider>();
                     }
+
+                    FindObjectOfType<BiomeTracker>().Default();
+
                 }
                 else if (tutorialON && SceneManager.GetActiveScene().name == "Game") //
                 {
@@ -96,6 +99,10 @@ public class PlayerSpawning : MonoBehaviour
                     go.GetComponent<PlayerInput>().SwitchCurrentActionMap("TutorialMap");
                     go.GetComponent<PlayerInput>().defaultActionMap = "TutorialMap";
                     go.GetComponent<PlayerPainting>().enabled = false;
+
+                    //biome checker on
+                    FindObjectOfType<BiomeTracker>().PlayThisAudio();
+
 
                     foreach (var cc in FindObjectsOfType<CinemachineConfiner>())
                     {
@@ -146,8 +153,11 @@ public class PlayerSpawning : MonoBehaviour
                     }
                     go.GetComponent<CharacterMovement>().enabled = true;
                     go.GetComponent<CharacterMovement>().cinemachineTargetGroup = targetbrain;
-
-                    go.GetComponent<CharacterMovement>().BeginGame();
+                   // if (go.GetComponent<CharacterMovement>().tutorialSetBegin)
+                   // {
+                        go.GetComponent<CharacterMovement>().BeginGame();
+                       // go.GetComponent<CharacterMovement>().tutorialSetBegin = false;
+                    //}
 
                     //cam
                     targetbrain.AddMember(go.transform, 1f, 5f);
@@ -179,6 +189,8 @@ public class PlayerSpawning : MonoBehaviour
         ChangePlayerInput();
         StartingPositions();
 
+        FindObjectOfType<BiomeTracker>().PlayThisAudio();
+
     }
 
     IEnumerator DisableVideo0()
@@ -194,6 +206,10 @@ public class PlayerSpawning : MonoBehaviour
 
         yield return new WaitForSeconds(18f);
         storyMovies.transform.GetChild(1).gameObject.SetActive(false);
+
+        //audio for biome checker turn on
+        FindObjectOfType<BiomeTracker>().PlayThisAudio();
+
     }
 
     public void SetInitialPlayerValues()

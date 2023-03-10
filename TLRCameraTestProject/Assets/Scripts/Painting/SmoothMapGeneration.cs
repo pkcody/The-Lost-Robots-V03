@@ -9,6 +9,9 @@ public class SmoothMapGeneration : MonoBehaviour
     private Terrain terrain;
     private TerrainData terData;
 
+    //tracking
+    public BiomeTracker btr;
+
     // Textures used to read/write
     private Texture2D tex;
     private Texture2D redTex;
@@ -64,6 +67,8 @@ public class SmoothMapGeneration : MonoBehaviour
             blueTex = new Texture2D(texRes, texRes);
             blueTex.LoadImage(fileData);
         }
+
+        btr = FindObjectOfType<BiomeTracker>();
 
         CreateMap();
     }
@@ -155,23 +160,21 @@ public class SmoothMapGeneration : MonoBehaviour
         }
 
         biomeMap.Apply();
-        
+
+        btr.tex = biomeMap;
+        StartCoroutine(btr.CheckBiome());
+
         terData.SetAlphamaps(0, 0, map);
 
 
         if (Application.isEditor)
         {
             System.IO.File.WriteAllBytes("Assets\\SmoothMapGeneration.png", biomeMap.EncodeToPNG());
-            //System.IO.File.WriteAllBytes("Assets\\SmoothMapGeneration 1.png", biomeMap.EncodeToPNG());
-            //System.IO.File.WriteAllBytes("Assets\\SmoothMapGeneration 2.png", biomeMap.EncodeToPNG());
-            //System.IO.File.WriteAllBytes("Assets\\SmoothMapGeneration 3.png", biomeMap.EncodeToPNG());
-            //System.IO.File.WriteAllBytes("Assets\\SmoothMapGeneration 4.png", biomeMap.EncodeToPNG());
         }
         else
         {
             string filepath = Application.dataPath.Substring(0, Application.dataPath.Length - 23);
             System.IO.File.WriteAllBytes(filepath + "/SmoothMapGeneration.png", biomeMap.EncodeToPNG());
-            //System.IO.File.WriteAllBytes(Application.streamingAssetsPath + "/SmoothMapGeneration.png", biomeMap.EncodeToPNG());
 
         }
         GridBreakdown.instance.SetCellsBiome();

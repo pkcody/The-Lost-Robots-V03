@@ -22,6 +22,16 @@ public class Mothership : MonoBehaviour
     public bool canBoardShip = false;
     public int robBoardedNum = 0;
 
+    //Backlog toggles
+    public GameObject toggleTower2;
+    public GameObject toggleTower3;
+    public GameObject toggleMSLoc;
+    public GameObject toggleAllParts;
+    public GameObject toggleWindow;
+    public GameObject toggleH2O;
+    public GameObject toggleBattery;
+
+
     //particles
     public GameObject smokeParticle;
     public GameObject liftOffAnim;
@@ -48,6 +58,10 @@ public class Mothership : MonoBehaviour
         {
             // where end audio goes
             canBoardShip = true;
+
+            //toggles
+            //toggleAllParts.GetComponent<Toggle>().isOn = false;
+
             MotherShipStory.instance.MSTalk("Outro_AllMissCounted");
             MotherShipSubTitles.instance.GameSubT(5);
 
@@ -76,6 +90,8 @@ public class Mothership : MonoBehaviour
         if(h20Slider.value == h20Slider.maxValue)
         {
             fullH20 = true;
+            toggleH2O.GetComponent<Toggle>().isOn = false;
+
             h20Slider.gameObject.SetActive(false);
             TryMotherShipEnd();
         }
@@ -89,6 +105,8 @@ public class Mothership : MonoBehaviour
             if (other.name == "Window_obj")
             {
                 window = true;
+                toggleWindow.GetComponent<Toggle>().isOn = false;
+
                 other.transform.root.GetComponent<CharHoldItem>().currentHold = null;
                 other.transform.root.GetComponent<CharacterMovement>().inRangeHold = false;
 
@@ -109,6 +127,8 @@ public class Mothership : MonoBehaviour
             else if (other.name == "QuadBattery")
             {
                 battery = true;
+                toggleBattery.GetComponent<Toggle>().isOn = false;
+
                 other.transform.root.GetComponent<CharHoldItem>().currentHold = null;
                 other.transform.root.GetComponent<CharacterMovement>().inRangeHold = false;
 
@@ -129,6 +149,8 @@ public class Mothership : MonoBehaviour
             else if (other.name == "InhalerReceiver")
             {
                 inhaler = true;
+                toggleH2O.GetComponent<Toggle>().isOn = false;
+
                 other.transform.root.GetComponent<CharHoldItem>().currentHold = null;
                 other.transform.root.GetComponent<CharacterMovement>().inRangeHold = false;
 
@@ -195,6 +217,23 @@ public class Mothership : MonoBehaviour
         if (tower1 && tower2 && tower3)
         {
             locationIcon.SetActive(true);
+            toggleMSLoc.GetComponent<Toggle>().isOn = false;
+
         }
+    }
+
+    public void Tower2Toggle()
+    {
+        toggleTower2.GetComponent<Toggle>().isOn = false;
+        toggleTower3.SetActive(true);
+    }
+    public void Tower3Toggle()
+    {
+        toggleTower3.GetComponent<Toggle>().isOn = false;
+        toggleMSLoc.SetActive(true);
+        toggleAllParts.SetActive(true);
+        toggleBattery.SetActive(true);
+        toggleH2O.SetActive(true);
+        toggleWindow.SetActive(true);
     }
 }

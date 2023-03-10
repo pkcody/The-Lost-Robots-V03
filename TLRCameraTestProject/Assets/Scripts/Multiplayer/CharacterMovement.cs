@@ -46,6 +46,8 @@ public class CharacterMovement : MonoBehaviour
     public bool offerItem;
     public bool inRangeHold;
 
+    public bool tutorialSetBegin = true;
+
     //Items in range
     [Header("Items in range")]
     public GameObject monster_obj;
@@ -92,6 +94,8 @@ public class CharacterMovement : MonoBehaviour
     public Sprite FullHealth;
     public Sprite DmgdHealth;
     public bool playerInvicOn = false;
+    public bool isAlive = true;
+    public GameObject otherPlayer;
 
     // camera stuff
     [Header("Camera Stuff")]
@@ -130,9 +134,6 @@ public class CharacterMovement : MonoBehaviour
 
     void Start()
     {
-
-        //inventoryObj.Container.Clear();
-        //invHolderText.gameObject.SetActive(false);
         StartCoroutine(CheckBoarderGlow(5f));
     }
 
@@ -526,6 +527,8 @@ public class CharacterMovement : MonoBehaviour
                 cm.inRangeCrafting = false;
                 cm.offerItem = false;
                 cm.inRangeHold = false;
+                cm.isAlive = true;
+                cm.PlayerBackAlive();
             }
             
         }
@@ -552,18 +555,46 @@ public class CharacterMovement : MonoBehaviour
     }
     public void PlayerTakeDamage()
     {
-        if(playerHealthInt > 0)
+        if(playerHealthInt > 1)
         {
             //print("taking dmg");
-            playerHealth[playerHealthInt].sprite = DmgdHealth;
-            animator.SetTrigger("takeDmg");
 
+            playerHealth[playerHealthInt].sprite = DmgdHealth;
             playerHealthInt--;
 
+            animator.SetTrigger("takeDmg");
+
+
         }
-        
+        else if(playerHealthInt == 1)
+        {
+            //player dies
+            playerHealth[playerHealthInt].sprite = DmgdHealth;
+            playerHealthInt--;
+
+            isAlive = false;
+            animator.Play("DeathRobot", 0, 0f);
+
+        }
+
     }
-    
+
+    public void PlayerBackAlive()
+    {
+        //raliave
+        PlayerTakeHeal();
+        StartCoroutine(ReverseDeath());
+    }
+
+    IEnumerator ReverseDeath()
+    {
+        animator.Play("ReversedDeathRobot", 0, 0f);
+
+        yield return new WaitForSeconds(1.5f);
+        isAlive = true;
+
+    }
+
     IEnumerator CraftTableAnimation(int i)
     {
         if (i == 1)
@@ -700,7 +731,11 @@ public class CharacterMovement : MonoBehaviour
 
             //}
             //boarder
-            MonsterAttackBoarder.SetActive(true);
+            if (monster_obj != null)
+            {
+                MonsterAttackBoarder.SetActive(true);
+
+            }
         }
         if (collision.GetComponent<Collider>().tag == "ResourceEncounter")
         {
@@ -730,8 +765,18 @@ public class CharacterMovement : MonoBehaviour
         {
             MotherShipSubTitles.instance.TutorialSpeak(collision.gameObject);
         }
+        if (collision.GetComponent<Collider>().tag == "Player")
+        {
+            otherPlayer = collision.gameObject;
+            if (!otherPlayer.GetComponent<CharacterMovement>().isAlive)
+            {
+                otherPlayer.GetComponent<CharacterMovement>().PlayerBackAlive();
+            }
+        }
 
     }
+
+    
 
 
     IEnumerator CheckBoarderGlow(float startDelay = 0f)
@@ -758,44 +803,47 @@ public class CharacterMovement : MonoBehaviour
     //update
     private void Update()
     {
-        
-        minX = transform.position.x > cinemachineTargetGroup.transform.position.x - cameraOffsetX;
-        maxX = transform.position.x < cinemachineTargetGroup.transform.position.x + cameraOffsetX;
-        minZ = transform.position.z > cinemachineTargetGroup.transform.position.z - cameraOffsetZ;
-        maxZ = transform.position.z < cinemachineTargetGroup.transform.position.z + cameraOffsetZ;
-        
-
-        if ((movementInput.x < 0 && minX || movementInput.x > 0 && maxX) && (movementInput.y < 0 && minZ || movementInput.y > 0 && maxZ))
+        if (isAlive)
         {
-            transform.Translate(new Vector3(movementInput.x, 0, movementInput.y) * playerSpeed * Time.deltaTime);
-            _rb.velocity = new Vector3(0f, _rb.velocity.y, 0f);
-            
-            if (movementInput.x != 0f || movementInput.y != 0f)
+            minX = transform.position.x > cinemachineTargetGroup.transform.position.x - cameraOffsetX;
+            maxX = transform.position.x < cinemachineTargetGroup.transform.position.x + cameraOffsetX;
+            minZ = transform.position.z > cinemachineTargetGroup.transform.position.z - cameraOffsetZ;
+            maxZ = transform.position.z < cinemachineTargetGroup.transform.position.z + cameraOffsetZ;
+
+
+            if ((movementInput.x < 0 && minX || movementInput.x > 0 && maxX) && (movementInput.y < 0 && minZ || movementInput.y > 0 && maxZ))
             {
-                lastLook = new Vector3(movementInput.x, 0, movementInput.y);
+                transform.Translate(new Vector3(movementInput.x, 0, movementInput.y) * playerSpeed * Time.deltaTime);
+                _rb.velocity = new Vector3(0f, _rb.velocity.y, 0f);
 
-                animator.SetBool("isRun", true);
-                walkParticle.SetActive(true);
+                if (movementInput.x != 0f || movementInput.y != 0f)
+                {
+                    lastLook = new Vector3(movementInput.x, 0, movementInput.y);
 
+                    animator.SetBool("isRun", true);
+                    walkParticle.SetActive(true);
+
+
+                }
+
+                body.transform.forward = lastLook;
 
             }
 
-            body.transform.forward = lastLook;
+            else
+            {
+                walkParticle.SetActive(false);
 
+                animator.SetBool("isRun", false);
+
+            }
+
+            if (transform.position.y < -50f)
+            {
+                transform.position = new Vector3(transform.position.x, 30f, transform.position.z);
+            }
         }
         
-        else
-        {
-            walkParticle.SetActive(false);
-
-            animator.SetBool("isRun", false);
-
-        }
-
-        if (transform.position.y < -50f)
-        {
-            transform.position = new Vector3(transform.position.x, 30f, transform.position.z);
-        }
     }
 
 

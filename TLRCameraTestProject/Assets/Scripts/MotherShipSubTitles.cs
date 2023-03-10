@@ -8,6 +8,10 @@ public class MotherShipSubTitles : MonoBehaviour
 {
     public static MotherShipSubTitles instance;
 
+    public List<AudioClip> paintLineAudio;
+    public AudioSource _as;
+    public List<AudioClip> audioClips;
+
     public TextMeshProUGUI text;
     public GameObject chatBoxPar;
 
@@ -46,6 +50,11 @@ public class MotherShipSubTitles : MonoBehaviour
 
     private IEnumerator DisplayLine(string line, string plat)
     {
+        //voice
+        _as.clip = audioClips.Find(clipName => clipName.name == plat);
+        _as.PlayOneShot(_as.clip, 0.5f);
+
+
         text.text = " ";
         text.gameObject.SetActive(true);
         chatBoxPar.gameObject.SetActive(true);
@@ -182,6 +191,10 @@ public class MotherShipSubTitles : MonoBehaviour
 
     IEnumerator FinishSentence(string line, string line2, string plat)
     {
+        _as.clip = audioClips.Find(clipName => clipName.name == plat+"1");
+        _as.PlayOneShot(_as.clip, 0.5f);
+
+
         text.text = " ";
         text.gameObject.SetActive(true);
         chatBoxPar.gameObject.SetActive(true);
@@ -206,6 +219,11 @@ public class MotherShipSubTitles : MonoBehaviour
 
 
         //line 2
+
+        _as.clip = audioClips.Find(clipName => clipName.name == plat + "2");
+        _as.PlayOneShot(_as.clip, 0.5f);
+
+
         text.text = " ";
 
         foreach (char letter in line2.ToCharArray())

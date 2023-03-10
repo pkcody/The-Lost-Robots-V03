@@ -33,7 +33,7 @@ public class AttackBehavior : StateMachineBehaviour
         foreach (CharacterMovement cm in cms)
         {
             float _distance = Vector3.Distance(cm.transform.position, agent.transform.position);
-            if (_distance < closestPlayerDist)
+            if (_distance < closestPlayerDist && cm.isAlive)
             {
                 closestPlayerDist = _distance;
                 closestTrans = cm.transform;
