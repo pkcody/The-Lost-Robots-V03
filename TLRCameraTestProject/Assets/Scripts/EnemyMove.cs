@@ -36,12 +36,7 @@ public class EnemyMove : MonoBehaviour
             {
 
                 //closestPlayer.GetComponent<CharacterMovement>().MonsterAttackBoarder.SetActive(false);
-                foreach (CharacterMovement cm in FindObjectsOfType<CharacterMovement>())
-                {
-                    cm.MonsterAttackBoarder.SetActive(false);
-
-                    cm.inRangeMonster = false;
-                }
+                
                 DeathRollAnimation();
                 
                 Debug.Log("Enemy down.");
@@ -97,6 +92,12 @@ public class EnemyMove : MonoBehaviour
 
     void DestroyEnemy()
     {
+        foreach (CharacterMovement cm in FindObjectsOfType<CharacterMovement>())
+        {
+            cm.MonsterAttackBoarder.SetActive(false);
+
+            cm.inRangeMonster = false;
+        }
         Destroy(transform.parent.parent.gameObject);
         
     }

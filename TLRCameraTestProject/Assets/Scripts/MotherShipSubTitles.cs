@@ -105,10 +105,15 @@ public class MotherShipSubTitles : MonoBehaviour
     {
         if (coroutine != null)
         {
+            
             StopCoroutine(coroutine);
             ButtonTutContainer.SetActive(false);
             text.gameObject.SetActive(false);
             chatBoxPar.gameObject.SetActive(false);
+        }
+        if(_as.isPlaying)
+        {
+            _as.Stop();
         }
 
     }
@@ -288,14 +293,14 @@ public class MotherShipSubTitles : MonoBehaviour
         else if (i == 3)
         {
             response = "This is *****. My lost robots, I need a *****, a full ****** of ****, " +
-                "and a plated *******. If you can her us, please bring the items to help!";
+                "and a plated *******. If you can hear us, please bring the items to help!";
             TryMSSpeak(response, "");
         }
         else if (i == 4)
         {
             StopMSC();
             response = "This is Mothership. My lost robots, I need a Window, a full canister of H2O, " +
-                "and a plated quadruple battery. If you can her us, please bring the items to help!";
+                "and a plated quadruple battery. If you can hear us, please bring the items to help!";
             TryMSSpeak(response, "");
         }
         else if (i == 5)

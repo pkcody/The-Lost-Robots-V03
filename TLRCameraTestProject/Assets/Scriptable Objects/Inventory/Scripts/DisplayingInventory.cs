@@ -332,6 +332,7 @@ public class DisplayingInventory : MonoBehaviour
 
                 if (AbilitiesCol[i].GetComponent<Image>().sprite.name.Contains("ScriptFiller"))
                 {
+
                     //print("filler AbilitySc");
 
                     AbilitiesCol[i].GetComponent<Image>().sprite = io.UIimage;
@@ -346,12 +347,23 @@ public class DisplayingInventory : MonoBehaviour
                     SetNameInInv();
 
                     return;
+
                 }
 
             }
         }
 
 
+    }
+
+    public bool CheckFastScript()
+    {
+        if (!AbilitiesCol[0].GetComponent<Image>().sprite.name.Contains("FasterAbility_UI") && !AbilitiesCol[1].GetComponent<Image>().sprite.name.Contains("FasterAbility_UI"))
+        {
+            return true;
+        }
+
+        return false;
     }
 
     private void OnTriggerExit(Collider collision)
@@ -394,7 +406,7 @@ public class DisplayingInventory : MonoBehaviour
                 {
                     print("ab AbilitySc");
 
-                    if (!IsAbilityFull())
+                    if (!IsAbilityFull() && CheckFastScript())
                     {
                         print(" fullll AbilitySc");
 

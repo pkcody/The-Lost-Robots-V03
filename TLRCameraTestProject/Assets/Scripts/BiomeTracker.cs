@@ -108,7 +108,7 @@ public class BiomeTracker : MonoBehaviour
         _as.clip = audioClips.Find(clipName => clipName.name.Contains(biome));
         _as.Play();
         //back in
-        while (_as.volume <= 1)
+        while (_as.volume <= .15f)
         {
             //_as.volume += startVolume * Time.deltaTime / duration;
             _as.volume += duration * Time.deltaTime;

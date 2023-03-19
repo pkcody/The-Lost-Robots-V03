@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 5493586447960558293}
   - component: {fileID: 5493586447960558298}
   - component: {fileID: 5493586447960558299}
-  - component: {fileID: 1578510334813711778}
   - component: {fileID: 4801917745184245827}
   m_Layer: 0
   m_Name: Cloud
@@ -28,8 +27,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5493586447960558297}
   m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.02, y: 0.02, z: 0.02}
+  m_LocalPosition: {x: 0, y: 0.88, z: 0}
+  m_LocalScale: {x: 2.5, y: 2.5, z: 2.5}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 5332325854436257521}
@@ -85,18 +84,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &1578510334813711778
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5493586447960558297}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 28fc4c2130cef4a4ca10724876c9b5e8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!95 &4801917745184245827
 Animator:
   serializedVersion: 4
@@ -105,7 +92,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5493586447960558297}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 57472d9693ca5fb4f93a82ac264c7cb1, type: 2}
   m_CullingMode: 0
@@ -144,7 +131,7 @@ Transform:
   m_GameObject: {fileID: 5798238723504226524}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 196.28, y: 196.28, z: 196.28}
+  m_LocalScale: {x: 0.99999994, y: 0.99999994, z: 0.99999994}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 5493586447960558293}
@@ -173,7 +160,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 0.008
-  m_Height: 0.03
+  m_Radius: 1.37
+  m_Height: 4.1
   m_Direction: 0
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0.16, z: 0}
