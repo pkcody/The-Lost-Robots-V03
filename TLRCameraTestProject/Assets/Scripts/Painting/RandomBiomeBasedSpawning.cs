@@ -195,7 +195,7 @@ public class RandomBiomeBasedSpawning : MonoBehaviour
 
     private void RedBiomeSpawn()
     {
-        Debug.Log("RedBiomeSpawn");
+        //Debug.Log("RedBiomeSpawn");
         redBiomeParent = GameObject.Find("RedBiomeParent").transform;
         foreach (Cell c in GridBreakdown.instance.redBiomeCells)
         {
@@ -203,7 +203,7 @@ public class RandomBiomeBasedSpawning : MonoBehaviour
             {
                 if (c.row != v.x || c.col != v.y)
                 {
-                    Debug.Log($"red {c.row} {c.col}");
+                    //Debug.Log($"red {c.row} {c.col}");
                     List<GameObject> redBiomeGOsInCell = new List<GameObject>();
                     for (int i = 0; i < Random.Range(redBiomeSpawnMinAmount, redBiomeSpawnMaxAmount); i++)
                     {
@@ -259,7 +259,7 @@ public class RandomBiomeBasedSpawning : MonoBehaviour
 
     private void GreenBiomeSpawn()
     {
-        Debug.Log("GreenBiomeSpawn");
+        //Debug.Log("GreenBiomeSpawn");
         greenBiomeParent = GameObject.Find("GreenBiomeParent").transform;
         foreach (Cell c in GridBreakdown.instance.greenBiomeCells)
         {
@@ -267,7 +267,7 @@ public class RandomBiomeBasedSpawning : MonoBehaviour
             {
                 if(c.row != v.x || c.col != v.y)
                 {
-                    Debug.Log($"green {c.row} {c.col}");
+                    //Debug.Log($"green {c.row} {c.col}");
                     List<GameObject> greenBiomeGOsInCell = new List<GameObject>();
                     for (int i = 0; i < Random.Range(greenBiomeSpawnMinAmount, greenBiomeSpawnMaxAmount); i++)
                     {
@@ -324,7 +324,7 @@ public class RandomBiomeBasedSpawning : MonoBehaviour
 
     private void BlueBiomeSpawn()
     {
-        Debug.Log("BlueBiomeSpawn");
+        //Debug.Log("BlueBiomeSpawn");
         blueBiomeParent = GameObject.Find("BlueBiomeParent").transform;
         foreach (Cell c in GridBreakdown.instance.blueBiomeCells)
         {
@@ -332,7 +332,7 @@ public class RandomBiomeBasedSpawning : MonoBehaviour
             {
                 if (c.row != v.x || c.col != v.y)
                 {
-                    Debug.Log($"blue {c.row} {c.col}");
+                    //Debug.Log($"blue {c.row} {c.col}");
                     List<GameObject> blueBiomeGOsInCell = new List<GameObject>();
                     for (int i = 0; i < Random.Range(blueBiomeSpawnMinAmount, blueBiomeSpawnMaxAmount); i++)
                     {

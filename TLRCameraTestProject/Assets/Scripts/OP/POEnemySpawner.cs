@@ -101,6 +101,7 @@ public class POEnemySpawner : MonoBehaviour
                 //enemy.Movement.Player = Player;
                 enemy.Agent.enabled = true;
                 //enemy.Movement.StartChasing();
+                enemy.transform.GetChild(0).position = new Vector3(SpawnPosition.x, SpawnPosition.y, SpawnPosition.z);
             }
             else
             {

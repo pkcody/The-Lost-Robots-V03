@@ -10643,7 +10643,7 @@ MonoBehaviour:
   m_SpriteState:
     m_HighlightedSprite: {fileID: 0}
     m_PressedSprite: {fileID: 0}
-    m_SelectedSprite: {fileID: 21300000, guid: 5054ae908dbd963429d3378537071b8c, type: 3}
+    m_SelectedSprite: {fileID: 21300000, guid: 529e000021a5b4c4b9240a34abeae511, type: 3}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
@@ -10676,7 +10676,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: ce21ca2fd1416aa41b60986cd83c06f6, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 529e000021a5b4c4b9240a34abeae511, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -10765,7 +10765,7 @@ MonoBehaviour:
   m_SpriteState:
     m_HighlightedSprite: {fileID: 0}
     m_PressedSprite: {fileID: 0}
-    m_SelectedSprite: {fileID: 21300000, guid: 36df0ea4a1e046e44a25ec34396f86d1, type: 3}
+    m_SelectedSprite: {fileID: 21300000, guid: 13d1f91f079eb3d4e8fe8ccaf4d0aa9f, type: 3}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
@@ -10798,7 +10798,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 2d854de0023010a4b8f7c5372e4ed3b4, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 13d1f91f079eb3d4e8fe8ccaf4d0aa9f, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -11143,7 +11143,7 @@ MonoBehaviour:
   m_SpriteState:
     m_HighlightedSprite: {fileID: 0}
     m_PressedSprite: {fileID: 0}
-    m_SelectedSprite: {fileID: 21300000, guid: ea3eaf93385ef764db826cd33bec8d43, type: 3}
+    m_SelectedSprite: {fileID: 21300000, guid: 5bf967a89e48015499a91e90b43d8f33, type: 3}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
@@ -11176,7 +11176,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 575772b28257e6a42ab8ff3884b9b633, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 5bf967a89e48015499a91e90b43d8f33, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -12672,7 +12672,7 @@ Light:
   m_Type: 2
   m_Shape: 0
   m_Color: {r: 0.82452834, g: 1, b: 0.9949949, a: 1}
-  m_Intensity: 0.78
+  m_Intensity: 0.57
   m_Range: 51.77
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208

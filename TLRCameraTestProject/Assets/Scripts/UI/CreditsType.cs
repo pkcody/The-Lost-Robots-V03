@@ -13,14 +13,13 @@ public class CreditsType : MonoBehaviour
     {
         string response = @"                            Credits
 
-    Paige Cody                     Programmer
+    Paige Cody                        Programmer
     Ashton McDonald         Animator
-    Arianna Tabatabaei      Modeller
+    Arianna Tabatabaei      Modeller and UI
 
 
                              Voice Actors
 
-    Allison Evdokimo            Robots
     Anesah Price                   Mother Ship";
 
         StartCoroutine(DisplayLine(response));
