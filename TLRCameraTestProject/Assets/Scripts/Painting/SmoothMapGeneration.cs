@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.AI.Navigation;
+
 
 public class SmoothMapGeneration : MonoBehaviour
 {
@@ -11,6 +13,9 @@ public class SmoothMapGeneration : MonoBehaviour
 
     //tracking
     public BiomeTracker btr;
+
+    public NavMeshSurface surface;
+
 
     // Textures used to read/write
     private Texture2D tex;
@@ -178,5 +183,8 @@ public class SmoothMapGeneration : MonoBehaviour
 
         }
         GridBreakdown.instance.SetCellsBiome();
+
+        //Update nav try
+        surface.BuildNavMesh();
     }
 }
