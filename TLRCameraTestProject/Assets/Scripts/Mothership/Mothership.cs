@@ -192,19 +192,22 @@ public class Mothership : MonoBehaviour
 
     IEnumerator PlayVideo()
     {
-        smokeParticle.SetActive(true);
-        liftOffAnim.GetComponent<Animation>().Play("LiftOff");
+        //smokeParticle.SetActive(true);
+
+        //Posing picture
+        storyMovies.transform.GetChild(2).gameObject.SetActive(true);
 
         yield return new WaitForSeconds(6f);
 
-        storyMovies.transform.GetChild(2).gameObject.SetActive(true);
+        //play animation
+        liftOffAnim.GetComponent<Animation>().Play("EndLiftOff");
 
-
+        //2d animation movie
         yield return new WaitForSeconds(6f);
         storyMovies.transform.GetChild(3).gameObject.SetActive(true);
         storyMovies.transform.GetChild(2).gameObject.SetActive(false);
 
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(4f);
         //storyMovies.transform.GetChild(3).gameObject.SetActive(false);
         ToCreditScene();
 
