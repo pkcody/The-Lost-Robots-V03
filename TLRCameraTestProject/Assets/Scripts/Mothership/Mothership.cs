@@ -44,6 +44,11 @@ public class Mothership : MonoBehaviour
     public GameObject MainCamera;
     public int playcount = 0;
 
+    //Bad ending
+    public bool AllDead = false;
+    public GameObject AllDeadEnding;
+    public int stillAlive;
+
     private void Start()
     {
         h20Slider.gameObject.SetActive(false);
@@ -192,25 +197,65 @@ public class Mothership : MonoBehaviour
 
     IEnumerator PlayVideo()
     {
-        //smokeParticle.SetActive(true);
+        if (AllDead == false)
+        {
+            //smokeParticle.SetActive(true);
 
-        //Posing picture
-        storyMovies.transform.GetChild(2).gameObject.SetActive(true);
+            //Posing picture
+            //storyMovies.transform.GetChild(2).gameObject.SetActive(true);
 
-        yield return new WaitForSeconds(6f);
+            //yield return new WaitForSeconds(6f);
 
-        //play animation
-        liftOffAnim.GetComponent<Animation>().Play("EndLiftOff");
+            //play animation
+            liftOffAnim.GetComponent<Animation>().Play("EndLiftOff");
 
-        //2d animation movie
-        yield return new WaitForSeconds(6f);
-        storyMovies.transform.GetChild(3).gameObject.SetActive(true);
-        storyMovies.transform.GetChild(2).gameObject.SetActive(false);
+            //2d animation movie
+            yield return new WaitForSeconds(5f);
+            //storyMovies.transform.GetChild(3).gameObject.SetActive(true);
+            //storyMovies.transform.GetChild(2).gameObject.SetActive(false);
 
-        yield return new WaitForSeconds(4f);
-        //storyMovies.transform.GetChild(3).gameObject.SetActive(false);
+            //yield return new WaitForSeconds(4f);
+            //storyMovies.transform.GetChild(3).gameObject.SetActive(false);
+        }
+        else if (AllDead == true)
+        {
+            yield return new WaitForSeconds(1f);
+
+            AllDeadEnding.SetActive(true);
+
+            yield return new WaitForSeconds(10f);
+
+        }
+
         ToCreditScene();
 
+    }
+
+    public void TestPlayersAlive()
+    {
+        stillAlive = playcount;
+        foreach (var item in Resources.FindObjectsOfTypeAll(typeof(GameObject)) as GameObject[])
+        {
+            if (item.name.Contains("Player"))
+            {
+                if (item.GetComponent<CharacterMovement>())
+                {
+                    if (!item.GetComponent<CharacterMovement>().isAlive)
+                    {
+                        stillAlive--;
+
+                        if (stillAlive == 0)
+                        {
+                            AllDead = true;
+                            StartCoroutine(PlayVideo());
+                        }
+
+                    }
+                }
+            }
+
+
+        }
     }
 
     private void Update()

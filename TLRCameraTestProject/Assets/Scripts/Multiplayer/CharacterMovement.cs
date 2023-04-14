@@ -65,13 +65,15 @@ public class CharacterMovement : MonoBehaviour
     public GameObject craftBTImage;
     public GameObject craftTableText;
 
-    public GameObject craftTablePanel;
-    public GameObject craftArm1;
-    public GameObject craftArm2;
+    //public GameObject craftTablePanel;
+    public GameObject craftTableTablet;
+    //public GameObject craftArm1;
+    //public GameObject craftArm2;
 
     public List<ItemObject> AttemptedRecipe = new List<ItemObject>();
     private List<int> itemRow1Save = new List<int>();
     private List<int> itemRow2Save = new List<int>();
+    private List<int> itemRow3Save = new List<int>();
 
     [Header("Recipe Stuff")]
     // Recipe stuff
@@ -108,6 +110,9 @@ public class CharacterMovement : MonoBehaviour
     public bool minZ;
     public bool maxZ;
 
+
+    public bool setHealth = false;
+
     //Holding
     [Header("Holding")]
     public CharHoldItem _charHoldItem;
@@ -120,6 +125,9 @@ public class CharacterMovement : MonoBehaviour
     //Particles
     [Header("Particles")]
     public GameObject walkParticle;
+
+
+    public GameObject Mothership;
 
     private void Awake()
     {
@@ -135,6 +143,26 @@ public class CharacterMovement : MonoBehaviour
     void Start()
     {
         StartCoroutine(CheckBoarderGlow(5f));
+        StartCoroutine(TryFixBrokenHealth());
+    }
+
+    IEnumerator TryFixBrokenHealth()
+    {
+        Debug.Log($"Health amt: {playerHealthInt} and did it find the images {setHealth}");
+        if (!setHealth)
+        {
+            foreach (Image image in robotInfo.transform.GetChild(2).GetComponentsInChildren<Image>())
+            {
+                playerHealth.Add(image);
+                playerHealthInt++;
+                setHealth = true;
+            }
+            //playerHealthInt--;
+            playerHealthMaxInt = playerHealthInt;
+        }
+
+        yield return new WaitForSeconds(10f);
+        StartCoroutine(TryFixBrokenHealth());
     }
 
     public void BeginGame()
@@ -149,13 +177,18 @@ public class CharacterMovement : MonoBehaviour
             inventory = robotInfo.transform.GetChild(0).gameObject;
             //inventory.SetActive(false);
 
-            foreach (Image image in robotInfo.transform.GetChild(2).GetComponentsInChildren<Image>())
+            if(!setHealth)
             {
-                playerHealth.Add(image);
-                playerHealthInt++;
+                foreach (Image image in robotInfo.transform.GetChild(2).GetComponentsInChildren<Image>())
+                {
+                    playerHealth.Add(image);
+                    playerHealthInt++;
+                    setHealth = true;
+                }
+                //playerHealthInt--;
+                playerHealthMaxInt = playerHealthInt;
             }
-            playerHealthInt--;
-            playerHealthMaxInt = playerHealthInt;
+            
 
 
             // find boarders
@@ -169,6 +202,10 @@ public class CharacterMovement : MonoBehaviour
                 else if (item.name.Contains("MonsterAttack"))
                 {
                     MonsterAttackBoarder = item;
+                }
+                else if (item.name.Contains("Mothership"))
+                {
+                    Mothership = item;
                 }
 
             }
@@ -223,18 +260,18 @@ public class CharacterMovement : MonoBehaviour
                 }
                 foreach (var item in crafting_obj.transform.GetComponentsInChildren<Transform>(true))
                 {
-                    if (item.name.Contains("CraftingPanel"))
+                    //if (item.name.Contains("CraftingPanel"))
+                    //{
+                    //    craftTablePanel = item.gameObject;
+                    //}
+                    if (item.name.Contains("TabletExpander"))
                     {
-                        craftTablePanel = item.gameObject;
+                        craftTableTablet = item.gameObject;
                     }
-                    if (item.name.Contains("Arm1"))
-                    {
-                        craftArm1 = item.gameObject;
-                    }
-                    if (item.name.Contains("Arm2"))
-                    {
-                        craftArm2 = item.gameObject;
-                    }
+                    //if (item.name.Contains("Arm2"))
+                    //{
+                    //    craftArm2 = item.gameObject;
+                    //}
 
                 }
 
@@ -312,7 +349,7 @@ public class CharacterMovement : MonoBehaviour
         }
     }
 
-    
+    #region Crafting******************************************************
     public void UpdateCraftingSlots()
     {
         CraftingSlots[0].sprite = RecipeMaker.instance.recipes[currentRecipeIndex].recipeItem1.UIimage;
@@ -365,6 +402,7 @@ public class CharacterMovement : MonoBehaviour
             AttemptedRecipe.Clear();
             itemRow1Save.Clear();
             itemRow2Save.Clear();
+            itemRow3Save.Clear();
 
             if (RecipeMaker.instance.recipes[currentRecipeIndex].recipeItem1.type != ItemType.Default)
             {
@@ -418,6 +456,23 @@ public class CharacterMovement : MonoBehaviour
                     }
                 }
             }
+            for (int i = 0; i < 3; i++)
+            {
+                for (int a = 0; a < AttemptedRecipe.Count; a++)
+                {
+                    if (myInv.ItemsRow3UI[i].GetComponent<Image>().sprite == AttemptedRecipe[a].UIimage)
+                    {
+                        itemRow3Save.Add(i);
+                        AttemptedRecipe.RemoveAt(a);
+                        if (AttemptedRecipe.Count == 0)
+                        {
+                            GivePlayerCraftedItem();
+                            return;
+                        }
+                        break;
+                    }
+                }
+            }
 
             offerItem = false;
 
@@ -439,6 +494,10 @@ public class CharacterMovement : MonoBehaviour
         foreach (int i in itemRow2Save)
         {
             myInv.ItemsRow2UI[i].GetComponent<Image>().sprite = RecipeMaker.instance.Empty.UIimage;
+        }
+        foreach (int i in itemRow3Save)
+        {
+            myInv.ItemsRow3UI[i].GetComponent<Image>().sprite = RecipeMaker.instance.Empty.UIimage;
         }
 
         if (RecipeMaker.instance.recipes[currentRecipeIndex].recipeItem1.type != ItemType.Default)
@@ -506,7 +565,7 @@ public class CharacterMovement : MonoBehaviour
         }
         
     }
-
+    #endregion
     public void OnMove(InputAction.CallbackContext ctx) => movementInput = ctx.ReadValue<Vector2>();
     public void OnJump(InputAction.CallbackContext ctx)
     {
@@ -521,7 +580,7 @@ public class CharacterMovement : MonoBehaviour
         {
             foreach (var cm in FindObjectsOfType<CharacterMovement>())
             {
-                cm.transform.position = new Vector3(transform.position.x, 10f, transform.position.z);
+                cm.transform.position = new Vector3(transform.position.x, 5f, transform.position.z);
                 cm.inRangeMonster = false;
                 cm.inRangeResource = false;
                 cm.inRangeCrafting = false;
@@ -548,8 +607,8 @@ public class CharacterMovement : MonoBehaviour
         {
             print("taking heal");
 
-            playerHealthInt++;
             playerHealth[playerHealthInt].sprite = FullHealth;
+            playerHealthInt++;
 
         }
     }
@@ -558,9 +617,9 @@ public class CharacterMovement : MonoBehaviour
         if(playerHealthInt > 1)
         {
             //print("taking dmg");
+            playerHealthInt--;
 
             playerHealth[playerHealthInt].sprite = DmgdHealth;
-            playerHealthInt--;
 
             animator.SetTrigger("takeDmg");
 
@@ -569,13 +628,18 @@ public class CharacterMovement : MonoBehaviour
         else if(playerHealthInt == 1)
         {
             //player dies
-            playerHealth[playerHealthInt].sprite = DmgdHealth;
             playerHealthInt--;
+
+            playerHealth[playerHealthInt].sprite = DmgdHealth;
 
             isAlive = false;
             animator.Play("DeathRobot", 0, 0f);
 
+            //check if all are dead
+            Mothership.GetComponent<Mothership>().TestPlayersAlive();
+
         }
+
 
     }
 
@@ -583,6 +647,7 @@ public class CharacterMovement : MonoBehaviour
     {
         //raliave
         PlayerTakeHeal();
+        isAlive = true;
         StartCoroutine(ReverseDeath());
     }
 
@@ -591,7 +656,7 @@ public class CharacterMovement : MonoBehaviour
         animator.Play("ReversedDeathRobot", 0, 0f);
 
         yield return new WaitForSeconds(1.5f);
-        isAlive = true;
+        
 
     }
 
@@ -599,16 +664,19 @@ public class CharacterMovement : MonoBehaviour
     {
         if (i == 1)
         {
-            craftArm1.SetActive(true);
-            craftArm2.SetActive(true);
+            //craftArm1.SetActive(true);
+            //craftArm2.SetActive(true);
 
-            craftArm1.GetComponent<Animation>().Play("Arm1Anim");
-            craftArm2.GetComponent<Animation>().Play("Arm2Anim");
+            //craftArm1.GetComponent<Animation>().Play("Arm1Anim");
+            //craftArm2.GetComponent<Animation>().Play("Arm2Anim");
+            //craftTableTablet.GetComponent<Animation>().Play("PanelAnim");
+            craftTableTablet.GetComponent<Animator>().SetBool("IsOpen", true);
+
             yield return new WaitForSeconds(0.5f);
 
 
-            craftTablePanel.SetActive(true);
-            craftTablePanel.GetComponent<Animation>().Play("PanelAnim");
+            //craftTablePanel.SetActive(true);
+            //craftTablePanel.GetComponent<Animation>().Play("PanelAnim");
 
             yield return new WaitForSeconds(2f);
 
@@ -621,28 +689,41 @@ public class CharacterMovement : MonoBehaviour
             if (craftTableText != null)
                 craftTableText.SetActive(false);
             yield return new WaitForSeconds(0.5f);
-            if (craftTablePanel != null)
+            //if (craftTablePanel != null)
+            //{
+            //    //craftTablePanel.GetComponent<Animation>().Play("PanelAnim_Reverse");
+            //    craftTableTablet.GetComponent<Animator>().SetBool("OpenUp", false);
+
+
+            //}
+            //yield return new WaitForSeconds(0.5f);
+            //if (craftTablePanel != null)
+            //    craftTablePanel.SetActive(false);
+
+            if (craftTableTablet.GetComponent<Animator>().GetBool("IsOpen") == true)
             {
-                craftTablePanel.GetComponent<Animation>().Play("PanelAnim_Reverse");
+                //craftTablePanel.GetComponent<Animation>().Play("PanelAnim_Reverse");
+                craftTableTablet.GetComponent<Animator>().SetBool("IsOpen", false);
+
 
             }
             yield return new WaitForSeconds(0.5f);
-            if (craftTablePanel != null)
-                craftTablePanel.SetActive(false);
+            //if (craftTablePanel != null)
+            //    craftTablePanel.SetActive(false);
 
-            if (craftArm1 != null)
-            {
-                craftArm1.GetComponent<Animation>().Play("Arm1Anim_Reverse");
-                craftArm2.GetComponent<Animation>().Play("Arm2Anim_Reverse");
-            }
+            //if (craftArm1 != null)
+            //{
+            //    //craftArm1.GetComponent<Animation>().Play("Arm1Anim_Reverse");
+            //    //craftArm2.GetComponent<Animation>().Play("Arm2Anim_Reverse");
+            //}
             
             yield return new WaitForSeconds(2f);
 
 
-            if (craftArm1 != null)
-                craftArm1.SetActive(false);
-            if (craftArm2 != null)
-                craftArm2.SetActive(false);
+            //if (craftArm1 != null)
+            //    craftArm1.SetActive(false);
+            //if (craftArm2 != null)
+            //    craftArm2.SetActive(false);
         }
 
     }

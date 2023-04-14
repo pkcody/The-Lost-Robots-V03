@@ -5458,6 +5458,7 @@ MonoBehaviour:
   inRangeCrafting: 0
   offerItem: 0
   inRangeHold: 0
+  tutorialSetBegin: 1
   monster_obj: {fileID: 0}
   monsterMain_obj: {fileID: 0}
   resource_obj: {fileID: 0}
@@ -5466,9 +5467,7 @@ MonoBehaviour:
   resourceSlider: {fileID: 0}
   craftBTImage: {fileID: 0}
   craftTableText: {fileID: 0}
-  craftTablePanel: {fileID: 0}
-  craftArm1: {fileID: 0}
-  craftArm2: {fileID: 0}
+  craftTableTablet: {fileID: 0}
   AttemptedRecipe: []
   CraftingSlots: []
   craftingOptionsIndex: {fileID: 0}
@@ -5495,6 +5494,7 @@ MonoBehaviour:
   itemToHold: {fileID: 0}
   animator: {fileID: 5242465034510592314}
   walkParticle: {fileID: 1791415619002721595}
+  Mothership: {fileID: 0}
 --- !u!114 &9102659932413087028
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6015,13 +6015,12 @@ MonoBehaviour:
   cursor: {fileID: 0}
   tex: {fileID: 0}
   radiusSlider: {fileID: 0}
-  cursorSpeed: 300
+  cursorSpeed: 600
   padding: 6
   radius: 10
   redColor: {r: 0.7411765, g: 0.3647059, b: 0, a: 1}
   blueColor: {r: 0.0627451, g: 0.5411765, b: 0.61960787, a: 1}
   greenColor: {r: 0.03137255, g: 0.3921569, b: 0.0627451, a: 1}
-  currColor: {r: 1, g: 1, b: 1, a: 1}
   offset: 2
 --- !u!114 &4124210216572618317
 MonoBehaviour:
@@ -6081,9 +6080,9 @@ MonoBehaviour:
   invHolderText: {fileID: 0}
   itemList: []
   perRobotUI: {fileID: 0}
-  BodyPartsRowUI: []
   ItemsRow1UI: []
   ItemsRow2UI: []
+  ItemsRow3UI: []
   AbilitiesCol: []
   MasterList: []
   masterIndex: 0

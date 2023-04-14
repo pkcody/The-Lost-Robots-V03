@@ -144,11 +144,12 @@ public class RecipeMaker : MonoBehaviour
 
         //V02--------
         //Towers
-        rTowerBuild2 = new Recipe("Tower 2", SatelliteTT, WoodRes, BatteryAdv, WiresWeakTT, TowerBuild2);
+        //rTowerBuild2 = new Recipe("Tower 2", SatelliteTT, WoodRes, BatteryAdv, WiresWeakTT, TowerBuild2);
+        rTowerBuild2 = new Recipe("Tower 2", SatelliteTT, WoodRes, WiresStrongTT, WiresWeakTT, TowerBuild2); 
         rTowerBuild3 = new Recipe("Tower 3", SatelliteTT, WoodRes, SolarPanelsTT, TiresTT, TowerBuild3);
         //Advance Tasks
         rFanAdv = new Recipe("Fan", SteelRes, AluminumRes, PolymerRes, Empty, FanAdv);
-        rBatteryAdv = new Recipe("Battery", WiresStrongTT, FourCellsTT, Empty, Empty, BatteryAdv);
+        //rBatteryAdv = new Recipe("Battery", WiresStrongTT, FourCellsTT, Empty, Empty, BatteryAdv);
         //Tiny Tasks
         //rWiresTT = new Recipe("Wires", CopperRes, Empty, Empty, Empty, WiresTT);
         rSatelliteTT = new Recipe("Satellite", PlasticRes, AluminumRes, SteelRes, Empty, SatelliteTT);
@@ -168,7 +169,7 @@ public class RecipeMaker : MonoBehaviour
         recipes.Add(rTowerBuild2);
         recipes.Add(rTowerBuild3);
         recipes.Add(rFanAdv);
-        recipes.Add(rBatteryAdv);
+        //recipes.Add(rBatteryAdv);
 
         recipes.Add(rSatelliteTT);
         recipes.Add(rWiresWeakTT);

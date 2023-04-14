@@ -178,10 +178,8 @@ public class PlayerSpawning : MonoBehaviour
 
         //show time
         MotherShipStory.instance.GameActuallyStarting();
-        GameObject storyMovies = GameObject.Find("StoryMovies");
-
-        storyMovies.transform.GetChild(0).gameObject.SetActive(true);
-        storyMovies.transform.GetChild(1).gameObject.SetActive(true);
+        GameObject introVideo = GameObject.Find("StoryMovies").transform.GetChild(1).gameObject;
+        introVideo.transform.GetChild(FindObjectsOfType<CharacterMovement>().Length - 2).gameObject.SetActive(true);
 
         StartCoroutine(DisableVideo0());
         StartCoroutine(DisableVideo1());
@@ -197,15 +195,16 @@ public class PlayerSpawning : MonoBehaviour
     {
         GameObject storyMovies = GameObject.Find("StoryMovies");
 
-        yield return new WaitForSeconds(16f);
+        yield return new WaitForSeconds(13f);
         storyMovies.transform.GetChild(0).gameObject.SetActive(false);
     }
     IEnumerator DisableVideo1()
     {
-        GameObject storyMovies = GameObject.Find("StoryMovies");
+        GameObject introVideo = GameObject.Find("StoryMovies").transform.GetChild(1).gameObject;
 
-        yield return new WaitForSeconds(18f);
-        storyMovies.transform.GetChild(1).gameObject.SetActive(false);
+        yield return new WaitForSeconds(7f);
+        introVideo.gameObject.SetActive(false);
+
 
         //audio for biome checker turn on
         FindObjectOfType<BiomeTracker>().PlayThisAudio();

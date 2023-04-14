@@ -15,6 +15,7 @@ public class GridBreakdown : MonoBehaviour
 
     public List<Cell> redBiomeCells = new List<Cell>();
     public List<Cell> greenBiomeCells = new List<Cell>();
+    public List<Cell> tealBiomeCells = new List<Cell>();
     public List<Cell> blueBiomeCells = new List<Cell>();
     public List<Cell> mixedBiomeCells = new List<Cell>();
 
@@ -68,8 +69,9 @@ public class GridBreakdown : MonoBehaviour
                 Cell c = Grid[row, col];
                 float redCount = c.possibleBiome[Biome.Red];
                 float greenCount = c.possibleBiome[Biome.Green];
+                float tealCount = c.possibleBiome[Biome.Teal];
                 float blueCount = c.possibleBiome[Biome.Blue];
-                float totalCount = redCount + greenCount + blueCount;
+                float totalCount = redCount + greenCount + tealCount + blueCount;
 
                 if (redCount / totalCount >= (minBiomePercentage / 100))
                 {
@@ -80,6 +82,11 @@ public class GridBreakdown : MonoBehaviour
                 {
                     c.biome = Biome.Green;
                     greenBiomeCells.Add(c);
+                }
+                else if (greenCount / totalCount >= (minBiomePercentage / 100))
+                {
+                    c.biome = Biome.Teal;
+                    tealBiomeCells.Add(c);
                 }
                 else if (blueCount / totalCount >= (minBiomePercentage / 100))
                 {
@@ -112,149 +119,9 @@ public class GridBreakdown : MonoBehaviour
         }
     }
 
-    //public Biome GetCellBiome(int row, int col)
-    //{
-    //    int rowMod = row * cellPixelSize;
-    //    int colMod = col * cellPixelSize;
-
-    //    int redCount = 0;
-    //    int greenCount = 0;
-    //    int blueCount = 0;
-
-    //    for (int y = colMod; y < colMod + cellPixelSize; y++)
-    //    {
-    //        for (int x = rowMod; x < rowMod + cellPixelSize; x++)
-    //        {
-    //            Vector2 coord = new Vector2(x, y);
-    //            if(redCoords.Contains(coord))
-    //            {
-    //                redCount++;
-    //                redCoords.Remove(coord);
-    //            }
-    //            else if(greenCoords.Contains(coord))
-    //            {
-    //                greenCount++;
-    //                greenCoords.Remove(coord);
-    //            }
-    //            if(blueCoords.Contains(coord))
-    //            {
-    //                blueCount++;
-    //                blueCoords.Remove(coord);
-    //            }
-    //        }
-    //    }
-    //    print($"row: {row}  ,  col:  {col}");
-    //    print($"r:{redCount} g:{greenCount} b:{blueCount}");
-        
-
-    //    int totalSum = redCount + greenCount + blueCount;
-    //    print(totalSum);
-    //    if (redCount / totalSum >= (minBiomePercentage / 100))
-    //    {
-    //        print($"rd:{redCount / totalSum}");
-    //        print("Red Cell");
-    //        return Biome.Red;
-    //    }
-    //    else if (greenCount / totalSum >= (minBiomePercentage / 100))
-    //    {
-    //        print($"gd:{greenCount / totalSum}");
-    //        print("Green Cell");
-    //        return Biome.Green;
-    //    }
-    //    else if (blueCount / totalSum >= (minBiomePercentage / 100))
-    //    {
-    //        print($"bd:{blueCount / totalSum}");
-    //        print("Blue Cell");
-    //        return Biome.Blue;
-    //    }
-    //    else
-    //    {
-    //        return Biome.Mixed;
-    //    }
-
-        
-
-
-
-
-
-        //int rowMod = row * cellPixelSize;
-        //int colMod = col * cellPixelSize;
-
-        //float[,] cellPixels = new float[cellPixelSize, cellPixelSize];
-
-        //for (int y = colMod; y < colMod + cellPixelSize; y++)
-        //{
-        //    for (int x = rowMod; x < rowMod + cellPixelSize; x++)
-        //    {
-        //        // HUE - H are degrees
-        //        float H, S, V;
-        //        Color.RGBToHSV(tex.GetPixel(x, y), out H, out S, out V);
-
-        //        if (x != 0 && y != 0)
-        //        {
-        //            cellPixels[x - rowMod, y - colMod] = H;
-        //        }
-        //        else if (x == 0 && y != 0)
-        //        {
-        //            cellPixels[0, y - colMod] = H;
-        //        }
-        //        else if (x != 0 && y == 0)
-        //        {
-        //            cellPixels[x - rowMod, 0] = H;
-        //        }
-        //        else
-        //        {
-        //            cellPixels[0, 0] = H;
-        //        }
-
-        //    }
-        //}
-
-        //return cellPixels;
-
-        //return;
+    
     }
 
-//    public float[,] GetCellPixels(int row, int col, Texture2D tex)
-//    {
-//        int rowMod = row * cellPixelSize;
-//        int colMod = col * cellPixelSize;
-
-//        float[,] cellPixels = new float[cellPixelSize, cellPixelSize];
-
-//        for (int y = colMod; y < colMod + cellPixelSize; y++)
-//        {
-//            for (int x = rowMod; x < rowMod + cellPixelSize; x++)
-//            {
-//                // HUE - H are degrees
-//                float H, S, V;
-//                Color.RGBToHSV(tex.GetPixel(x, y), out H, out S, out V);
-
-//                if (x != 0 && y != 0)
-//                {
-//                    cellPixels[x - rowMod, y - colMod] = H;
-//                }
-//                else if (x == 0 && y != 0)
-//                {
-//                    cellPixels[0, y - colMod] = H;
-//                }
-//                else if (x != 0 && y == 0)
-//                {
-//                    cellPixels[x - rowMod, 0] = H;
-//                }
-//                else
-//                {
-//                    cellPixels[0, 0] = H;
-//                }
-
-//            }
-//        }
-
-//        return cellPixels;
-//    }
-//    //#endif
-//}
 
 public class Cell : MonoBehaviour
 {
@@ -272,6 +139,7 @@ public class Cell : MonoBehaviour
         {
             {Biome.Red, 0},
             {Biome.Green, 0},
+            {Biome.Teal, 0},
             {Biome.Blue, 0},
             {Biome.Mixed, 0}
         };
@@ -283,5 +151,6 @@ public enum Biome
     Mixed,
     Red,
     Green,
+    Teal,
     Blue
 }

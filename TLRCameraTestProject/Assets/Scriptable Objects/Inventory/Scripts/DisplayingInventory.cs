@@ -14,9 +14,10 @@ public class DisplayingInventory : MonoBehaviour
 
     public GameObject perRobotUI;
 
-    public List<Transform> BodyPartsRowUI;
+    //public List<Transform> BodyPartsRowUI;
     public List<Transform> ItemsRow1UI;
     public List<Transform> ItemsRow2UI;
+    public List<Transform> ItemsRow3UI;
     public List<Transform> AbilitiesCol;
 
     public List<Transform> MasterList;
@@ -39,17 +40,18 @@ public class DisplayingInventory : MonoBehaviour
 
         //Fill inv
         //body parts
+        
         for (int i = 0; i < 3; i++)
         {
-            BodyPartsRowUI.Add(perRobotUI.transform.GetChild(0).GetChild(1).GetChild(0).GetChild(i));
+            ItemsRow1UI.Add(perRobotUI.transform.GetChild(0).GetChild(1).GetChild(0).GetChild(i));
         }
         for (int i = 0; i < 3; i++)
         {
-            ItemsRow1UI.Add(perRobotUI.transform.GetChild(0).GetChild(1).GetChild(1).GetChild(i));
+            ItemsRow2UI.Add(perRobotUI.transform.GetChild(0).GetChild(1).GetChild(1).GetChild(i));
         }
         for (int i = 0; i < 3; i++)
         {
-            ItemsRow2UI.Add(perRobotUI.transform.GetChild(0).GetChild(1).GetChild(2).GetChild(i));
+            ItemsRow3UI.Add(perRobotUI.transform.GetChild(0).GetChild(1).GetChild(2).GetChild(i));
         }
         for (int i = 0; i < 2; i++)
         {
@@ -57,9 +59,11 @@ public class DisplayingInventory : MonoBehaviour
         }
 
         //master list
-        MasterList.AddRange(BodyPartsRowUI);
+        //MasterList.AddRange(BodyPartsRowUI);
         MasterList.AddRange(ItemsRow1UI);
         MasterList.AddRange(ItemsRow2UI);
+        MasterList.AddRange(ItemsRow3UI);
+
         MasterList.AddRange(AbilitiesCol);
         //disable highlights
         foreach (var item in MasterList)
@@ -303,19 +307,15 @@ public class DisplayingInventory : MonoBehaviour
                 }
 
             }
-            
-
-        }
-        else if (io.type == ItemType.BodyParts)
-        {
             for (int i = 0; i < 3; i++)
             {
-                if (BodyPartsRowUI[i].GetComponent<Image>().sprite.name.Contains("Red"))
+                if (ItemsRow3UI[i].GetComponent<Image>().sprite.name.Contains("Red"))
                 {
-                    BodyPartsRowUI[i].GetComponent<Image>().sprite = io.UIimage;
+                    ItemsRow3UI[i].GetComponent<Image>().sprite = io.UIimage;
+                    GetComponent<RobotMessaging>().RobotSpeakResource(io);
                     GetComponent<CharacterMovement>().offerItem = false;
-
                     SetNameInInv();
+
 
                     return;
                 }
@@ -323,6 +323,23 @@ public class DisplayingInventory : MonoBehaviour
             }
 
         }
+        //else if (io.type == ItemType.BodyParts)
+        //{
+        //    for (int i = 0; i < 3; i++)
+        //    {
+        //        if (BodyPartsRowUI[i].GetComponent<Image>().sprite.name.Contains("Red"))
+        //        {
+        //            BodyPartsRowUI[i].GetComponent<Image>().sprite = io.UIimage;
+        //            GetComponent<CharacterMovement>().offerItem = false;
+
+        //            SetNameInInv();
+
+        //            return;
+        //        }
+
+        //    }
+
+        //}
         else if (io.type == ItemType.AbilityScripts)
         {
             //print("AbilitySc");
@@ -393,15 +410,15 @@ public class DisplayingInventory : MonoBehaviour
                     }
                     
                 }
-                else if (item.item.type == ItemType.BodyParts)
-                {
-                    if (!IsBodyFull())
-                    {
-                        inventoryObj.AddItem(item.item, 1); // only makes 1 at time
-                        AddToInventory(item.item);
-                        Destroy(collision.gameObject);
-                    }
-                }
+                //else if (item.item.type == ItemType.BodyParts)
+                //{
+                //    if (!IsBodyFull())
+                //    {
+                //        inventoryObj.AddItem(item.item, 1); // only makes 1 at time
+                //        AddToInventory(item.item);
+                //        Destroy(collision.gameObject);
+                //    }
+                //}
                 else if (item.item.type == ItemType.AbilityScripts)
                 {
                     print("ab AbilitySc");
@@ -438,11 +455,19 @@ public class DisplayingInventory : MonoBehaviour
             }
 
         }
+        for (int i = 0; i < 3; i++)
+        {
+            if (ItemsRow3UI[i].GetComponent<Image>().sprite.name.Contains("Red"))
+            {
+                return false;
+            }
+
+        }
         return true;
     }
     public bool IsAbilityFull()
     {
-        for (int i = 0; i < 2; i++)
+        for (int i = 0; i < 2; i++) 
         {
             if (AbilitiesCol[i].GetComponent<Image>().sprite.name.Contains("ScriptFiller"))
             {
@@ -451,15 +476,15 @@ public class DisplayingInventory : MonoBehaviour
         }
         return true;
     }
-    public bool IsBodyFull()
-    {
-        for (int i = 0; i < 3; i++)
-        {
-            if (BodyPartsRowUI[i].GetComponent<Image>().sprite.name.Contains("Red"))
-            {
-                return false;
-            }
-        }
-        return true;
-    }
+    //public bool IsBodyFull()
+    //{
+    //    for (int i = 0; i < 3; i++)
+    //    {
+    //        if (BodyPartsRowUI[i].GetComponent<Image>().sprite.name.Contains("Red"))
+    //        {
+    //            return false;
+    //        }
+    //    }
+    //    return true;
+    //}
 }

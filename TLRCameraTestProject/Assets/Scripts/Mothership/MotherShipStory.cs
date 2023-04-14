@@ -125,7 +125,7 @@ public class MotherShipStory : MonoBehaviour
 
     IEnumerator DelayCrash()
     {
-        yield return new WaitForSeconds(16f);
+        yield return new WaitForSeconds(1f);
         MSTalk("Crash");
 
     }

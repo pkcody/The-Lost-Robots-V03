@@ -30,6 +30,15 @@ public class RandomBiomeBasedSpawning : MonoBehaviour
     public int greenBiomeAttemptsToSpawnNotNearAnotherSpawn = 5;
     public List<GameObject> greenBiomeSpawnedGOs = new List<GameObject>();
 
+    [Header("Teal Biome Spawns")]
+    public List<GameObject> tealBiomePrefabs;
+    public Transform tealBiomeParent;
+    public int tealBiomeSpawnMinAmount = 15;
+    public int tealBiomeSpawnMaxAmount = 25;
+    public int tealBiomeMinDistanceBetweenSpawns = 7;
+    public int tealBiomeAttemptsToSpawnNotNearAnotherSpawn = 5;
+    public List<GameObject> tealBiomeSpawnedGOs = new List<GameObject>();
+
     [Header("Blue Biome Spawns")]
     public List<GameObject> blueBiomePrefabs;
     public Transform blueBiomeParent;
@@ -51,60 +60,6 @@ public class RandomBiomeBasedSpawning : MonoBehaviour
             Destroy(gameObject);
         }
 
-
-        //Object[] redBiome_Resources = Resources.LoadAll("RedResources", typeof(GameObject));
-        //Object[] greenBiome_Resources = Resources.LoadAll("GreenResources", typeof(GameObject));
-        //Object[] blueBiome_Resources = Resources.LoadAll("BlueResources", typeof(GameObject));
-
-        //Debug.Log(Application.dataPath + "data_path");
-
-        ////Object[] redBiome_Resources = Resources.LoadAll("C:/Users/kcody/Desktop/TheLostRobotsBuild/RedResources", typeof(GameObject));
-        ////Object[] greenBiome_Resources = Resources.LoadAll("C:/Users/kcody/Desktop/TheLostRobotsBuild/GreenResources", typeof(GameObject));
-        ////Object[] blueBiome_Resources = Resources.LoadAll("C:/Users/kcody/Desktop/TheLostRobotsBuild/BlueResources", typeof(GameObject));
-
-
-        //Debug.Log(redBiome_Resources.Length + "FunkyMonkey");
-        //Debug.Log(greenBiome_Resources.Length);
-        //Debug.Log(blueBiome_Resources.Length);
-
-        //Instantiate("RedResources")
-
-        //Object[] redBiome_Resources;
-        //Object[] greenBiome_Resources;
-        //Object[] blueBiome_Resources;
-
-        //if (Application.isEditor)
-        //{
-        //    redBiome_Resources = Resources.LoadAll("RedResources", typeof(GameObject));
-        //    greenBiome_Resources = Resources.LoadAll("GreenResources", typeof(GameObject));
-        //    blueBiome_Resources = Resources.LoadAll("BlueResources", typeof(GameObject));
-        //}
-        //else
-        //{
-        //    //Application.persistentDataPath
-        //    redBiome_Resources = Application.dataPath("/RedResources", typeof(GameObject));
-        //    greenBiome_Resources = Resources.LoadAll(Application.streamingAssetsPath + "/GreenResources", typeof(GameObject));
-        //    blueBiome_Resources = Resources.LoadAll(Application.streamingAssetsPath + "/BlueResources", typeof(GameObject));
-
-        //    //redBiome_Resources = System
-        //    //greenBiome_Resources = Resources.LoadAll("GreenResources", typeof(GameObject));
-        //    //blueBiome_Resources = Resources.LoadAll("BlueResources", typeof(GameObject));
-        //}
-
-
-
-        //foreach (var go in redBiome_Resources)
-        //{
-        //    redBiomePrefabs.Add(go as GameObject);
-        //}
-        //foreach (var go in greenBiome_Resources)
-        //{
-        //    greenBiomePrefabs.Add(go as GameObject);
-        //}
-        //foreach (var go in blueBiome_Resources)
-        //{
-        //    blueBiomePrefabs.Add(go as GameObject);
-        //}
     }
 
 
@@ -147,6 +102,7 @@ public class RandomBiomeBasedSpawning : MonoBehaviour
         SpawnMothership();
         RedBiomeSpawn();
         GreenBiomeSpawn();
+        TealBiomeSpawn();
         BlueBiomeSpawn();
         ClearFloaters();
 
@@ -172,7 +128,16 @@ public class RandomBiomeBasedSpawning : MonoBehaviour
                 Debug.Log("Cleaned up");
             }
         }
-        foreach(GameObject go in blueBiomeSpawnedGOs)
+        foreach (GameObject go in tealBiomeSpawnedGOs)
+        {
+            Physics.Raycast(go.transform.position - new Vector3(0, -0.25f, 0), Vector3.down, out RaycastHit hit, 100);
+            if (hit.distance > 1)
+            {
+                Destroy(go);
+                Debug.Log("Cleaned up");
+            }
+        }
+        foreach (GameObject go in blueBiomeSpawnedGOs)
         {
             Physics.Raycast(go.transform.position - new Vector3(0, -0.25f, 0), Vector3.down, out RaycastHit hit, 100);
             if (hit.distance > 1)
@@ -319,6 +284,71 @@ public class RandomBiomeBasedSpawning : MonoBehaviour
         foreach (GameObject greenBiomeGO in greenBiomeSpawnedGOs)
         {
             greenBiomeGO.transform.position = MoveGOToTerrainHeight(greenBiomeGO);
+        }
+    }
+
+    private void TealBiomeSpawn()
+    {
+        //Debug.Log("GreenBiomeSpawn");
+        tealBiomeParent = GameObject.Find("TealBiomeParent").transform;
+        foreach (Cell c in GridBreakdown.instance.tealBiomeCells)
+        {
+            foreach (Vector2 v in doNotSpawnInCells)
+            {
+                if (c.row != v.x || c.col != v.y)
+                {
+                    //Debug.Log($"green {c.row} {c.col}");
+                    List<GameObject> tealBiomeGOsInCell = new List<GameObject>();
+                    for (int i = 0; i < Random.Range(tealBiomeSpawnMinAmount, tealBiomeSpawnMaxAmount); i++)
+                    {
+                        for (int a = 0; a < tealBiomeAttemptsToSpawnNotNearAnotherSpawn; a++)
+                        {
+
+                            Vector3 spawnPos = RandomPrefabSpawnPosInCell(c);
+
+                            if (tealBiomeGOsInCell.Count == 0)
+                            {
+                                GameObject pickedTealBiomePrefab = tealBiomePrefabs[Random.Range(0, tealBiomePrefabs.Count)];
+                                GameObject tealBiomeGO = Instantiate(pickedTealBiomePrefab, spawnPos, Quaternion.Euler(new Vector3(0, Random.Range(0, 360), 0)), tealBiomeParent);
+                                tealBiomeGOsInCell.Add(tealBiomeGO);
+                                tealBiomeSpawnedGOs.Add(tealBiomeGO);
+                                break;
+                            }
+                            else
+                            {
+                                foreach (GameObject existingSpawn in tealBiomeGOsInCell)
+                                {
+                                    if ((spawnPos - existingSpawn.transform.position).magnitude < tealBiomeMinDistanceBetweenSpawns)
+                                    {
+                                        break;
+                                    }
+                                    else
+                                    {
+                                        GameObject pickedTealBiomePrefab = tealBiomePrefabs[Random.Range(0, tealBiomePrefabs.Count)];
+                                        GameObject tealBiomeGO = Instantiate(pickedTealBiomePrefab, spawnPos, Quaternion.Euler(new Vector3(0, Random.Range(0, 360), 0)), tealBiomeParent);
+                                        tealBiomeGOsInCell.Add(tealBiomeGO);
+                                        tealBiomeSpawnedGOs.Add(tealBiomeGO);
+                                        break;
+                                    }
+                                }
+                                Debug.Log("Unable to spawn Teal");
+                                break;
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    //Debug.Log($"Cannot spawn in {c.row} {c.col}");
+                }
+
+            }
+
+        }
+
+        foreach (GameObject tealBiomeGO in tealBiomeSpawnedGOs)
+        {
+            tealBiomeGO.transform.position = MoveGOToTerrainHeight(tealBiomeGO);
         }
     }
 

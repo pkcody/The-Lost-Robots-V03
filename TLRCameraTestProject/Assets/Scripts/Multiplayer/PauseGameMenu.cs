@@ -178,7 +178,7 @@ public class PauseGameMenu : MonoBehaviour
         }
         if(mainMenu != null)
         {
-            mainFirstBtn = mainMenu.transform.GetChild(0).gameObject;
+            mainFirstBtn = mainMenu.transform.GetChild(1).gameObject;
         }
     }
 

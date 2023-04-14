@@ -21,6 +21,7 @@ public class SmoothMapGeneration : MonoBehaviour
     private Texture2D tex;
     private Texture2D redTex;
     private Texture2D greenTex;
+    private Texture2D tealTex;
     private Texture2D blueTex;
     private int mapResolution = 1000;
     private int texRes = 1000;
@@ -46,6 +47,11 @@ public class SmoothMapGeneration : MonoBehaviour
             greenTex = new Texture2D(texRes, texRes);
             greenTex.LoadImage(fileData);
 
+            //Get Teal Tex
+            fileData = System.IO.File.ReadAllBytes("Assets\\Textures\\TealGroundTex.png");
+            tealTex = new Texture2D(texRes, texRes);
+            tealTex.LoadImage(fileData);
+
             //Get Blue Tex
             fileData = System.IO.File.ReadAllBytes("Assets\\Textures\\BlueGroundTex.png");
             blueTex = new Texture2D(texRes, texRes);
@@ -66,6 +72,11 @@ public class SmoothMapGeneration : MonoBehaviour
             fileData = System.IO.File.ReadAllBytes(Application.streamingAssetsPath + "/GreenGroundTex.png");
             greenTex = new Texture2D(texRes, texRes);
             greenTex.LoadImage(fileData);
+
+            //Get Teal Tex
+            fileData = System.IO.File.ReadAllBytes(Application.streamingAssetsPath + "/TealGroundTex.png");
+            tealTex = new Texture2D(texRes, texRes);
+            tealTex.LoadImage(fileData);
 
             //Get Blue Tex
             fileData = System.IO.File.ReadAllBytes(Application.streamingAssetsPath + "/BlueGroundTex.png");
@@ -104,7 +115,8 @@ public class SmoothMapGeneration : MonoBehaviour
         Color biomeColor;
 
 
-        float[,,] map = new float[mapResolution, mapResolution, 3];
+        float[,,] map = new float[mapResolution, mapResolution, 4]; //// change this inclused the 4 maps layers
+
 
         GridBreakdown.instance.GenerateGrid();
         Texture2D biomeMap = new Texture2D(mapResolution, mapResolution, TextureFormat.RGB24, false);
@@ -123,9 +135,11 @@ public class SmoothMapGeneration : MonoBehaviour
                 {
                     biomeColor = redTex.GetPixel(randX, randY);
                     
+                    // Terrain layers
                     map[y, x, 0] = 0f;
                     map[y, x, 1] = 1f;
                     map[y, x, 2] = 0f;
+                    map[y, x, 3] = 0f;
                     
                     c.possibleBiome[Biome.Red] += 1;
                 }
@@ -136,8 +150,22 @@ public class SmoothMapGeneration : MonoBehaviour
                     map[y, x, 0] = 0f;
                     map[y, x, 1] = 0f;
                     map[y, x, 2] = 1f;
-                    
+                    map[y, x, 3] = 0f;
+
+
                     c.possibleBiome[Biome.Green] += 1;
+                }
+                else if (pixelColor.g > 0.9f && pixelColor.b > 0.8f) // Teal
+                {
+                    biomeColor = tealTex.GetPixel(randX, randY);
+
+                    map[y, x, 0] = 0f;
+                    map[y, x, 1] = 0f;
+                    map[y, x, 2] = 0f;
+                    map[y, x, 3] = 1f;
+
+
+                    c.possibleBiome[Biome.Teal] += 1;
                 }
                 else if (pixelColor.b == Mathf.Max(pixelColor.r, pixelColor.g, pixelColor.b)) // Blue
                 {
@@ -146,7 +174,9 @@ public class SmoothMapGeneration : MonoBehaviour
                     map[y, x, 0] = 1f;
                     map[y, x, 1] = 0f;
                     map[y, x, 2] = 0f;
-                   
+                    map[y, x, 3] = 0f;
+
+
                     c.possibleBiome[Biome.Blue] += 1;
                 }
                 else // pixel still white, set to blue
@@ -156,7 +186,9 @@ public class SmoothMapGeneration : MonoBehaviour
                     map[y, x, 0] = 1f;
                     map[y, x, 1] = 0f;
                     map[y, x, 2] = 0f;
-                    
+                    map[y, x, 3] = 0f;
+
+
                     c.possibleBiome[Biome.Blue] += 1;
                 }
 

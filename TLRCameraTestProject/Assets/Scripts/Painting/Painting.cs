@@ -1,4 +1,4 @@
-using System.Collections;
+ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,6 +14,7 @@ public class Painting : MonoBehaviour
 
     public Color redColor;
     public Color blueColor;
+    public Color tealColor;
     public Color greenColor;
     public Color currColor;
 

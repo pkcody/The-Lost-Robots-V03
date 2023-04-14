@@ -26,7 +26,7 @@ public class PlayerPainting : MonoBehaviour
     public Color redColor;
     public Color blueColor;
     public Color greenColor;
-    public Color currColor = Color.red;
+    private Color currColor = Color.white;
 
     GraphicRaycaster m_Raycaster;
     PointerEventData m_PointerEventData;
@@ -207,6 +207,7 @@ public class PlayerPainting : MonoBehaviour
         
         cursor = GameObject.FindGameObjectWithTag("Cursors").transform.GetChild(System.Array.IndexOf(PlayerSpawning.instance.players, gameObject)).GetComponent<CustomCursor>();
         cursor.gameObject.SetActive(true);
+        //cursor.GetComponent<Image>().color = currColor;
         radiusSlider = FindObjectOfType<Slider>();
         cursorTransform = cursor.GetComponent<RectTransform>();
         //canvasTransform = FindObjectOfType<Canvas>().transform as RectTransform;
@@ -227,14 +228,17 @@ public class PlayerPainting : MonoBehaviour
         if (color == "Red")
         {
             currColor = redColor;
+            cursor.GetComponent<Image>().color = currColor;
         }
         else if (color == "Blue")
         {
             currColor = blueColor;
+            cursor.GetComponent<Image>().color = currColor;
         }
         else if (color == "Green")
         {
             currColor = greenColor;
+            cursor.GetComponent<Image>().color = currColor;
         }
         else
         {
