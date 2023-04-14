@@ -143,27 +143,27 @@ public class CharacterMovement : MonoBehaviour
     void Start()
     {
         StartCoroutine(CheckBoarderGlow(5f));
-        StartCoroutine(TryFixBrokenHealth());
+        //StartCoroutine(TryFixBrokenHealth());
     }
 
-    IEnumerator TryFixBrokenHealth()
-    {
-        Debug.Log($"Health amt: {playerHealthInt} and did it find the images {setHealth}");
-        if (!setHealth)
-        {
-            foreach (Image image in robotInfo.transform.GetChild(2).GetComponentsInChildren<Image>())
-            {
-                playerHealth.Add(image);
-                playerHealthInt++;
-                setHealth = true;
-            }
-            //playerHealthInt--;
-            playerHealthMaxInt = playerHealthInt;
-        }
+    //IEnumerator TryFixBrokenHealth()
+    //{
+    //    Debug.Log($"Health amt: {playerHealthInt} and did it find the images {setHealth}");
+    //    if (!setHealth)
+    //    {
+    //        foreach (Image image in robotInfo.transform.GetChild(2).GetComponentsInChildren<Image>())
+    //        {
+    //            playerHealth.Add(image);
+    //            playerHealthInt++;
+    //            setHealth = true;
+    //        }
+    //        //playerHealthInt--;
+    //        playerHealthMaxInt = playerHealthInt;
+    //    }
 
-        yield return new WaitForSeconds(10f);
-        StartCoroutine(TryFixBrokenHealth());
-    }
+    //    yield return new WaitForSeconds(10f);
+    //    StartCoroutine(TryFixBrokenHealth());
+    //}
 
     public void BeginGame()
     {
@@ -177,7 +177,7 @@ public class CharacterMovement : MonoBehaviour
             inventory = robotInfo.transform.GetChild(0).gameObject;
             //inventory.SetActive(false);
 
-            if(!setHealth)
+            if (!setHealth)
             {
                 foreach (Image image in robotInfo.transform.GetChild(2).GetComponentsInChildren<Image>())
                 {
@@ -188,7 +188,15 @@ public class CharacterMovement : MonoBehaviour
                 //playerHealthInt--;
                 playerHealthMaxInt = playerHealthInt;
             }
-            
+
+            //foreach (Image image in robotInfo.transform.GetChild(2).GetComponentsInChildren<Image>())
+            //{
+            //    playerHealth.Add(image);
+            //    playerHealthInt++;
+            //    setHealth = true;
+            //}
+            ////playerHealthInt--;
+            //playerHealthMaxInt = playerHealthInt;
 
 
             // find boarders
@@ -203,7 +211,7 @@ public class CharacterMovement : MonoBehaviour
                 {
                     MonsterAttackBoarder = item;
                 }
-                else if (item.name.Contains("Mothership"))
+                else if (item.name.Contains("Mothership_obj"))
                 {
                     Mothership = item;
                 }
