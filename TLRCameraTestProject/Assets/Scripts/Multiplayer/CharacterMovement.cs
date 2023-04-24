@@ -126,6 +126,10 @@ public class CharacterMovement : MonoBehaviour
     [Header("Particles")]
     public GameObject walkParticle;
 
+    //Sound
+    [Header("Sound")]
+    public AudioSource _as;
+    public List<AudioClip> audioClips;
 
     public GameObject Mothership;
 
@@ -630,6 +634,7 @@ public class CharacterMovement : MonoBehaviour
             playerHealth[playerHealthInt].sprite = DmgdHealth;
 
             animator.SetTrigger("takeDmg");
+            _as.PlayOneShot(audioClips.Find(clipName => clipName.name == "Damage"), 0.5f);
 
 
         }

@@ -26,6 +26,11 @@ public class EnemyMove : MonoBehaviour
 
     public GameObject deathParticle;
 
+    //Sound
+    [Header("Sound")]
+    public AudioSource _as;
+    public List<AudioClip> audioClips;
+
     public int EnemyLives
     {
         get { return _lives; }
@@ -162,6 +167,8 @@ public class EnemyMove : MonoBehaviour
     {
         monsterSlider.value -= damage;
         EnemyLives -= damage;
+        _as.PlayOneShot(audioClips.Find(clipName => clipName.name == "DamageEnemy"), 0.5f);
+
 
     }
 
@@ -216,5 +223,5 @@ public class EnemyMove : MonoBehaviour
     //}
 
 
-   
+
 }
