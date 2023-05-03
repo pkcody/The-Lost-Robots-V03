@@ -88,6 +88,10 @@ public class CharacterMovement : MonoBehaviour
     [Header("Boarders")]
     public GameObject HitBoarder;
     public GameObject MonsterAttackBoarder;
+    public SkinnedMeshRenderer robotHelmet;
+    public Material robotHelmet_og;
+    public Material robotHelmet_bad;
+
 
     //health
     [Header("Health")]
@@ -808,7 +812,7 @@ public class CharacterMovement : MonoBehaviour
         {
             inRangeMonster = false;
             //boarder
-            MonsterAttackBoarder.SetActive(false);
+            //MonsterAttackBoarder.SetActive(false);
         }
         if (collision.GetComponent<Collider>().tag == "ResourceEncounter")
         {
@@ -933,11 +937,14 @@ public class CharacterMovement : MonoBehaviour
             if(!HitBoarder.activeSelf)
             {
                 //HitBoarder.SetActive(true);
+                robotHelmet.material = robotHelmet_bad;
             }
         }
         else
         {
             //HitBoarder.SetActive(false);
+            robotHelmet.material = robotHelmet_og;
+
         }
 
         yield return new WaitForSeconds(.5f);

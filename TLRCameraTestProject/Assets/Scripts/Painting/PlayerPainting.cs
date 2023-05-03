@@ -26,6 +26,7 @@ public class PlayerPainting : MonoBehaviour
     public Color redColor;
     public Color blueColor;
     public Color greenColor;
+    public Color tealColor;
     private Color currColor = Color.white;
 
     GraphicRaycaster m_Raycaster;
@@ -160,6 +161,10 @@ public class PlayerPainting : MonoBehaviour
             {
                 ChangeColor("Green");
             }
+            else if (result.gameObject.name == "TealButton")
+            {
+                ChangeColor("Teal");
+            }
             else if(result.gameObject.name == "BlueButton")
             {
                 ChangeColor("Blue");
@@ -238,6 +243,11 @@ public class PlayerPainting : MonoBehaviour
         else if (color == "Green")
         {
             currColor = greenColor;
+            cursor.GetComponent<Image>().color = currColor;
+        }
+        else if (color == "Teal")
+        {
+            currColor = tealColor;
             cursor.GetComponent<Image>().color = currColor;
         }
         else

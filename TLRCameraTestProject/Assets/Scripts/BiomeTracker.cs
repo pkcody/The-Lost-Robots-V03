@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Rendering.PostProcessing;
+//using UnityEngine.Rendering.PostProcessing;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 
 public class BiomeTracker : MonoBehaviour
 {
@@ -17,18 +19,20 @@ public class BiomeTracker : MonoBehaviour
     Coroutine audioCoroutine = null;
     Coroutine postCoroutine = null;
 
-    public PostProcessVolume defaultPost;
+    //public PostProcessVolume defaultPost;
+    public Volume defaultPost;
     public AudioClip defaultAudio;
 
     //Post
     //public PostProcessVolume 
-    public List<PostProcessVolume> postBiomes;
+    //public List<PostProcessVolume> postBiomes;
+    public List<Volume> postBiomes;
 
     public void Default()
     {
         _as.clip = defaultAudio;
         _as.Play();
-        PostProcessVolume ppv = defaultPost;
+        Volume ppv = defaultPost;
         while (ppv.weight <= 1)
         {
             ppv.weight += 1 * Time.deltaTime;
@@ -39,7 +43,7 @@ public class BiomeTracker : MonoBehaviour
 
     public void PlayThisAudio()
     {
-        PostProcessVolume ppv = defaultPost;
+        Volume ppv = defaultPost;
 
         while (ppv.weight > 0)
         {
@@ -65,10 +69,16 @@ public class BiomeTracker : MonoBehaviour
                 print("red b");
                 nextBiome = "red";
             }
-            else if ((pixelColor.g - pixelColor.b) > .2f)
+            else if (pixelColor.g == Mathf.Max(pixelColor.r, pixelColor.g, pixelColor.b) && pixelColor.g < 0.5f)
             {
                 print("green b");
                 nextBiome = "green";
+
+            }
+            else if (pixelColor.g == Mathf.Max(pixelColor.r, pixelColor.g, pixelColor.b) && pixelColor.g > 0.5f)
+            {
+                print("teal b");
+                nextBiome = "teal";
 
             }
             else
@@ -122,7 +132,7 @@ public class BiomeTracker : MonoBehaviour
     IEnumerator FadePost(string cur, string old, float duration)
     {
         //fade in
-        PostProcessVolume ppv = postBiomes.Find(clipName => clipName.name.Contains(old));
+        Volume ppv = postBiomes.Find(clipName => clipName.name.Contains(old));
         print("ppv old" + ppv.name);
         while (ppv.weight > 0)
         {

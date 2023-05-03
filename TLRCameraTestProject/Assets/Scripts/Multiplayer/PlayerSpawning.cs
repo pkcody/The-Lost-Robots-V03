@@ -195,7 +195,7 @@ public class PlayerSpawning : MonoBehaviour
     {
         GameObject storyMovies = GameObject.Find("StoryMovies");
 
-        yield return new WaitForSeconds(13f);
+        yield return new WaitForSeconds(15f);
         storyMovies.transform.GetChild(0).gameObject.SetActive(false);
     }
     IEnumerator DisableVideo1()

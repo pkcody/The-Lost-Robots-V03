@@ -143,7 +143,7 @@ public class SmoothMapGeneration : MonoBehaviour
                     
                     c.possibleBiome[Biome.Red] += 1;
                 }
-                else if (pixelColor.g == Mathf.Max(pixelColor.r, pixelColor.g, pixelColor.b)) // Green
+                else if (pixelColor.g == Mathf.Max(pixelColor.r, pixelColor.g, pixelColor.b) && pixelColor.g < 0.5f) // Green
                 {
                     biomeColor = greenTex.GetPixel(randX, randY);
                     
@@ -155,8 +155,9 @@ public class SmoothMapGeneration : MonoBehaviour
 
                     c.possibleBiome[Biome.Green] += 1;
                 }
-                else if (pixelColor.g > 0.9f && pixelColor.b > 0.8f) // Teal
+                else if (pixelColor.g == Mathf.Max(pixelColor.r, pixelColor.g, pixelColor.b) && pixelColor.g > 0.5f) // Teal
                 {
+                    //print("teal");
                     biomeColor = tealTex.GetPixel(randX, randY);
 
                     map[y, x, 0] = 0f;

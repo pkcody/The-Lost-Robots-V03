@@ -18,6 +18,7 @@ TagManager:
   - FixItEncounter
   - TutorialScript
   - TutorialPlayThrough
+  - StandingDamage
   layers:
   - Default
   - TransparentFX

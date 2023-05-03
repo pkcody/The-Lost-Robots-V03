@@ -83,7 +83,7 @@ public class GridBreakdown : MonoBehaviour
                     c.biome = Biome.Green;
                     greenBiomeCells.Add(c);
                 }
-                else if (greenCount / totalCount >= (minBiomePercentage / 100))
+                else if (tealCount / totalCount >= (minBiomePercentage / 100))
                 {
                     c.biome = Biome.Teal;
                     tealBiomeCells.Add(c);

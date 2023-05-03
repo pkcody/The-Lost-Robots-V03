@@ -5510,6 +5510,9 @@ MonoBehaviour:
   currentRecipeIndex: 0
   HitBoarder: {fileID: 0}
   MonsterAttackBoarder: {fileID: 0}
+  robotHelmet: {fileID: 5239557012870547348}
+  robotHelmet_og: {fileID: 2100000, guid: e32b1c06fa5dcba4e86571bbf8f28b4a, type: 2}
+  robotHelmet_bad: {fileID: 2100000, guid: 07a41c9f7271dc244aa8a54f232d6d0c, type: 2}
   playerHealth: []
   playerHealthInt: 0
   playerHealthMaxInt: 0
@@ -6074,6 +6077,7 @@ MonoBehaviour:
   redColor: {r: 0.7411765, g: 0.3647059, b: 0, a: 1}
   blueColor: {r: 0.0627451, g: 0.5411765, b: 0.61960787, a: 1}
   greenColor: {r: 0.03137255, g: 0.3921569, b: 0.0627451, a: 1}
+  tealColor: {r: 0.27450982, g: 0.82745105, b: 0.7960785, a: 1}
   offset: 2
 --- !u!114 &4124210216572618317
 MonoBehaviour:
