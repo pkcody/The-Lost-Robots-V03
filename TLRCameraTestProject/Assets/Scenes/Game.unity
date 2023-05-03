@@ -1202,68 +1202,6 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
---- !u!1001 &125043338
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 584200200}
-    m_Modifications:
-    - target: {fileID: 5813413379599418838, guid: 42414612ba56c6a48a7f9c6ce000667c, type: 3}
-      propertyPath: m_Name
-      value: BatteryAdv_obj
-      objectReference: {fileID: 0}
-    - target: {fileID: 6622178241655775084, guid: 42414612ba56c6a48a7f9c6ce000667c, type: 3}
-      propertyPath: m_RootOrder
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6622178241655775084, guid: 42414612ba56c6a48a7f9c6ce000667c, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 251.9
-      objectReference: {fileID: 0}
-    - target: {fileID: 6622178241655775084, guid: 42414612ba56c6a48a7f9c6ce000667c, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -9.03
-      objectReference: {fileID: 0}
-    - target: {fileID: 6622178241655775084, guid: 42414612ba56c6a48a7f9c6ce000667c, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 125.8
-      objectReference: {fileID: 0}
-    - target: {fileID: 6622178241655775084, guid: 42414612ba56c6a48a7f9c6ce000667c, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6622178241655775084, guid: 42414612ba56c6a48a7f9c6ce000667c, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6622178241655775084, guid: 42414612ba56c6a48a7f9c6ce000667c, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6622178241655775084, guid: 42414612ba56c6a48a7f9c6ce000667c, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6622178241655775084, guid: 42414612ba56c6a48a7f9c6ce000667c, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6622178241655775084, guid: 42414612ba56c6a48a7f9c6ce000667c, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6622178241655775084, guid: 42414612ba56c6a48a7f9c6ce000667c, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 42414612ba56c6a48a7f9c6ce000667c, type: 3}
---- !u!4 &125043339 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6622178241655775084, guid: 42414612ba56c6a48a7f9c6ce000667c, type: 3}
-  m_PrefabInstance: {fileID: 125043338}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &127607435
 GameObject:
   m_ObjectHideFlags: 0
@@ -9664,7 +9602,6 @@ Transform:
   - {fileID: 255870113}
   - {fileID: 2615647065222574836}
   - {fileID: 902318400}
-  - {fileID: 125043339}
   m_Father: {fileID: 0}
   m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -73977,11 +73914,12 @@ MonoBehaviour:
   - {fileID: 7565888689011430287, guid: 2c71068397b25a341b3d3083569a5409, type: 3}
   - {fileID: 1042844324681901835, guid: eaf890e315a4b1348923f50c4c46dfee, type: 3}
   - {fileID: 2939652734321564168, guid: 9ec65d46961e74341b4b86ec7dbae350, type: 3}
-  - {fileID: 5798238723504226524, guid: 6ec3db2703cf2b5438a4b994a30edc36, type: 3}
-  - {fileID: 5798238723504226524, guid: 6ec3db2703cf2b5438a4b994a30edc36, type: 3}
-  - {fileID: 5798238723504226524, guid: 6ec3db2703cf2b5438a4b994a30edc36, type: 3}
-  - {fileID: 5798238723504226524, guid: 6ec3db2703cf2b5438a4b994a30edc36, type: 3}
-  - {fileID: 5798238723504226524, guid: 6ec3db2703cf2b5438a4b994a30edc36, type: 3}
+  - {fileID: 5798238723504226524, guid: b786212d8e88cda4ab30ef4183e63beb, type: 3}
+  - {fileID: 5798238723504226524, guid: eef1c6e6e5052f34e9ce56471a84d529, type: 3}
+  - {fileID: 5798238723504226524, guid: 8afacbdff507e784c92997273023f91d, type: 3}
+  - {fileID: 5798238723504226524, guid: 3e64588a8f84a2749aecdd3e72c5ce0a, type: 3}
+  - {fileID: 5798238723504226524, guid: 32144e1d8f0eb854aaca6ca2c249a3e9, type: 3}
+  - {fileID: 5798238723504226524, guid: 349592c239fa95f44a50240c18f875fe, type: 3}
   blueBiomeParent: {fileID: 7864114487221405738}
   blueBiomeSpawnMinAmount: 10
   blueBiomeSpawnMaxAmount: 20

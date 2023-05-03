@@ -69,19 +69,19 @@ public class BiomeTracker : MonoBehaviour
                 print("red b");
                 nextBiome = "red";
             }
-            else if (pixelColor.g == Mathf.Max(pixelColor.r, pixelColor.g, pixelColor.b) && pixelColor.g < 0.5f)
+            else if (pixelColor.g == Mathf.Max(pixelColor.r, pixelColor.g, pixelColor.b) && pixelColor.b < 0.29f)
             {
                 print("green b");
                 nextBiome = "green";
 
             }
-            else if (pixelColor.g == Mathf.Max(pixelColor.r, pixelColor.g, pixelColor.b) && pixelColor.g > 0.5f)
+            else if (pixelColor.g == Mathf.Max(pixelColor.r, pixelColor.g, pixelColor.b) && pixelColor.b > 0.5f)
             {
                 print("teal b");
                 nextBiome = "teal";
 
             }
-            else
+            else if (pixelColor.b > 0.29f && pixelColor.g < 0.49f)
             {
                 print("blue b");
                 nextBiome = "blue";
