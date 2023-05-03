@@ -34,10 +34,12 @@ public class Mothership : MonoBehaviour
 
     //particles
     public GameObject smokeParticle;
-    public GameObject liftOffAnim;
+    public GameObject EndMSObj;
     public GameObject locationIcon;
 
     public GameObject storyMovies;
+
+    public GameObject whiteScreen;
 
     //Camera
     public GameObject LeavePlanetCamera;
@@ -56,6 +58,17 @@ public class Mothership : MonoBehaviour
 
         storyMovies = GameObject.Find("StoryMovies");
         playcount = PlayerInputManager.instance.playerCount;
+
+        foreach (var anim in GetComponentsInChildren<Animator>(true))
+        {
+            if (anim.gameObject.name.Contains(playcount.ToString()))
+            {
+                EndMSObj = anim.gameObject;
+                EndMSObj.SetActive(true);
+                break;
+            }
+        }
+        
     }
     public void TryMotherShipEnd()
     {
@@ -70,12 +83,39 @@ public class Mothership : MonoBehaviour
             MotherShipStory.instance.MSTalk("Outro_AllMissCounted");
             MotherShipSubTitles.instance.GameSubT(5);
 
-            foreach (var rm in FindObjectsOfType<RobotMessaging>())
+            //foreach (var rm in FindObjectsOfType<RobotMessaging>())
+            //{
+            //    rm.MotherRobotSpeak("Yayyyy we did it!!!!!");
+            //}
+            //white
+            whiteScreen.GetComponent<Animation>().Play("FadeWhite");
+            //move
+            foreach (var players in FindObjectsOfType<CharacterMovement>())
             {
-                rm.MotherRobotSpeak("Yayyyy we did it!!!!!");
-            }
+                players.gameObject.transform.position = new Vector3(1000, -100, 1000);
 
-            
+            }
+            //turn on new
+            foreach (var robos in EndMSObj.GetComponentsInChildren<Transform>(true))
+            {
+                if (robos.gameObject.name.Contains("RobotWalkEnd"))
+                {
+                    robos.gameObject.SetActive(true);
+                }
+            }
+            //change camera
+            LeavePlanetCamera.SetActive(true);
+            LeavePlanetCamera.tag = "MainCamera";
+            MainCamera.tag = "Untagged";
+            //unwhite fade
+            whiteScreen.GetComponent<Animation>().Play("UnFadeWhite");
+
+            //play animation
+            EndMSObj.GetComponent<Animator>().enabled = true;
+
+            //straight to credit
+            Invoke("ToCreditScene", 8.95f);
+
         }
         else 
         {
@@ -169,55 +209,13 @@ public class Mothership : MonoBehaviour
                 TryMotherShipEnd();
             }
         }
-        if (other.name.Contains("Player"))
-        {
-            if (canBoardShip)
-            {
-                Destroy(other.gameObject);
-                robBoardedNum++;
-
-                if (robBoardedNum == playcount)
-                {
-                    MotherShipStory.instance.MSTalk("Outro_Thankyou");
-                    MotherShipSubTitles.instance.GameSubT(6);
-                    //play videos
-                    //mothership animation and change camera
-                    LeavePlanetCamera.SetActive(true);
-                    LeavePlanetCamera.tag = "MainCamera";
-                    MainCamera.tag = "Untagged";
-                    print("try to leave please");
-                    StartCoroutine(PlayVideo());
-
-                    //Invoke("ToCreditScene", 8f);
-                }
-            }
-        }
+        
         
     }
 
     IEnumerator PlayVideo()
     {
-        if (AllDead == false)
-        {
-            //smokeParticle.SetActive(true);
-
-            //Posing picture
-            //storyMovies.transform.GetChild(2).gameObject.SetActive(true);
-
-            //yield return new WaitForSeconds(6f);
-
-            //play animation
-            liftOffAnim.GetComponent<Animation>().Play("EndLiftOff");
-
-            //2d animation movie
-            yield return new WaitForSeconds(5f);
-            //storyMovies.transform.GetChild(3).gameObject.SetActive(true);
-            //storyMovies.transform.GetChild(2).gameObject.SetActive(false);
-
-            //yield return new WaitForSeconds(4f);
-            //storyMovies.transform.GetChild(3).gameObject.SetActive(false);
-        }
-        else if (AllDead == true)
+        if (AllDead == true)
         {
             yield return new WaitForSeconds(1f);
 

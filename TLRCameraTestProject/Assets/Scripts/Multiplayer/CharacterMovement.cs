@@ -6,6 +6,7 @@ using TMPro;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using Cinemachine;
+using System.Linq;
 
 public class CharacterMovement : MonoBehaviour
 {
@@ -98,6 +99,7 @@ public class CharacterMovement : MonoBehaviour
     public bool playerInvicOn = false;
     public bool isAlive = true;
     public GameObject otherPlayer;
+    public GameObject dmgParticles;
 
     // camera stuff
     [Header("Camera Stuff")]
@@ -183,12 +185,15 @@ public class CharacterMovement : MonoBehaviour
 
             if (!setHealth)
             {
-                foreach (Image image in robotInfo.transform.GetChild(2).GetComponentsInChildren<Image>())
-                {
-                    playerHealth.Add(image);
-                    playerHealthInt++;
-                    setHealth = true;
-                }
+                //foreach (Image image in robotInfo.transform.GetChild(2).GetComponentsInChildren<Image>())
+                //{
+                //    playerHealth.Add(image);
+                //    playerHealthInt++;
+                //    setHealth = true;
+                //}
+                GameObject healthGP = robotInfo.transform.GetChild(2).gameObject;
+                playerHealth = healthGP.GetComponentsInChildren<Image>(true).ToList();
+                playerHealthInt = 6;
                 //playerHealthInt--;
                 playerHealthMaxInt = playerHealthInt;
             }
@@ -537,6 +542,16 @@ public class CharacterMovement : MonoBehaviour
             if (myInv.ItemsRow1UI[i].GetComponent<Image>().sprite.name.Contains("Red"))
             {
                 myInv.ItemsRow1UI[i].GetComponent<Image>().sprite = RecipeMaker.instance.recipes[currentRecipeIndex].recipeItem5.UIimage;
+
+                try
+                {
+                    _as.PlayOneShot(audioClips.Find(clipName => clipName.name == "Glitch"), 0.5f);
+                }
+                catch
+                {
+                    Debug.Log("catch audio craft");
+                }
+
                 return;
             }
 
@@ -546,6 +561,16 @@ public class CharacterMovement : MonoBehaviour
             if (myInv.ItemsRow2UI[i].GetComponent<Image>().sprite.name.Contains("Red"))
             {
                 myInv.ItemsRow2UI[i].GetComponent<Image>().sprite = RecipeMaker.instance.recipes[currentRecipeIndex].recipeItem5.UIimage;
+
+                try
+                {
+                    _as.PlayOneShot(audioClips.Find(clipName => clipName.name == "Glitch"), 0.5f);
+                }
+                catch
+                {
+                    Debug.Log("catch audio craft");
+                }
+
                 return;
             }
 
@@ -619,22 +644,43 @@ public class CharacterMovement : MonoBehaviour
         {
             print("taking heal");
 
-            playerHealth[playerHealthInt].sprite = FullHealth;
+            //playerHealth[playerHealthInt].sprite = FullHealth;
+            playerHealth[playerHealthInt + 6].gameObject.SetActive(false);
+            playerHealth[playerHealthInt].gameObject.SetActive(true);
+
             playerHealthInt++;
 
         }
     }
+
+    IEnumerator PlayDmgParticles()
+    {
+        dmgParticles.SetActive(true);
+        yield return new WaitForSeconds(1f);
+        dmgParticles.SetActive(false);
+
+    }
     public void PlayerTakeDamage()
     {
+        StartCoroutine(PlayDmgParticles());
         if(playerHealthInt > 1)
         {
+
             //print("taking dmg");
             playerHealthInt--;
 
-            playerHealth[playerHealthInt].sprite = DmgdHealth;
-
+            //playerHealth[playerHealthInt].sprite = DmgdHealth;
+            playerHealth[playerHealthInt].gameObject.SetActive(false);
+            playerHealth[playerHealthInt+6].gameObject.SetActive(true);
             animator.SetTrigger("takeDmg");
-            _as.PlayOneShot(audioClips.Find(clipName => clipName.name == "Damage"), 0.5f);
+            try
+            {
+                _as.PlayOneShot(audioClips.Find(clipName => clipName.name == "Damage"), 0.5f);
+            }
+            catch
+            {
+                Debug.Log("catch audio dmg");
+            }
 
 
         }
@@ -643,7 +689,9 @@ public class CharacterMovement : MonoBehaviour
             //player dies
             playerHealthInt--;
 
-            playerHealth[playerHealthInt].sprite = DmgdHealth;
+            //playerHealth[playerHealthInt].sprite = DmgdHealth;
+            playerHealth[playerHealthInt].gameObject.SetActive(false);
+            playerHealth[playerHealthInt + 6].gameObject.SetActive(true);
 
             isAlive = false;
             animator.Play("DeathRobot", 0, 0f);
@@ -712,14 +760,17 @@ public class CharacterMovement : MonoBehaviour
             //yield return new WaitForSeconds(0.5f);
             //if (craftTablePanel != null)
             //    craftTablePanel.SetActive(false);
-
-            if (craftTableTablet.GetComponent<Animator>().GetBool("IsOpen") == true)
+            if(craftTableTablet != null)
             {
-                //craftTablePanel.GetComponent<Animation>().Play("PanelAnim_Reverse");
-                craftTableTablet.GetComponent<Animator>().SetBool("IsOpen", false);
+                if (craftTableTablet.GetComponent<Animator>().GetBool("IsOpen") == true)
+                {
+                    //craftTablePanel.GetComponent<Animation>().Play("PanelAnim_Reverse");
+                    craftTableTablet.GetComponent<Animator>().SetBool("IsOpen", false);
 
 
+                }
             }
+            
             yield return new WaitForSeconds(0.5f);
             //if (craftTablePanel != null)
             //    craftTablePanel.SetActive(false);
@@ -881,12 +932,12 @@ public class CharacterMovement : MonoBehaviour
         {
             if(!HitBoarder.activeSelf)
             {
-                HitBoarder.SetActive(true);
+                //HitBoarder.SetActive(true);
             }
         }
         else
         {
-            HitBoarder.SetActive(false);
+            //HitBoarder.SetActive(false);
         }
 
         yield return new WaitForSeconds(.5f);

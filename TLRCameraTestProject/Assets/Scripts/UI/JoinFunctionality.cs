@@ -23,6 +23,7 @@ public class JoinFunctionality : MonoBehaviour
     //Ready up stuff
     public GameObject ReadyUpObj;
     public int readyIndex;
+    public bool isReady = false; 
 
 
 
@@ -49,12 +50,17 @@ public class JoinFunctionality : MonoBehaviour
             //RobotTypes.SetActive(false);
 
             JoinGame.SetActive(false);
+            playerSpawnHelpIndex.transform.GetChild(0).GetChild(2).gameObject.SetActive(true);
+
             RobotTypes.SetActive(true);
 
             foreach (var item in playerSpawnHelpIndex.GetComponentsInChildren<TextMeshProUGUI>())
             {
-                personalityTypeTexts.Add(item);
-                item.gameObject.SetActive(false);
+                if (item.name.Contains("Text"))
+                {
+                    personalityTypeTexts.Add(item);
+                    item.gameObject.SetActive(false);
+                }
             }
             personalityTypeTexts[0].gameObject.SetActive(true);
 
@@ -76,40 +82,47 @@ public class JoinFunctionality : MonoBehaviour
 
     public void OnNextTypeRobo(InputAction.CallbackContext ctx)
     {
-        if (ctx.performed)
+        if (!isReady)
         {
-            if (SceneManager.GetActiveScene().name == "Join")
+            if (ctx.performed)
             {
-                print("Join arrow");
-                personalityTypeTexts[index].gameObject.SetActive(false);
-                index = (index + 1) % personalityTypeTexts.Count;
-                personalityTypeTexts[index].gameObject.SetActive(true);
+                if (SceneManager.GetActiveScene().name == "Join")
+                {
+                    print("Join arrow");
+                    personalityTypeTexts[index].gameObject.SetActive(false);
+                    index = (index + 1) % personalityTypeTexts.Count;
+                    personalityTypeTexts[index].gameObject.SetActive(true);
 
 
-                SetScreenToPersonality();
+                    SetScreenToPersonality();
+                }
             }
         }
+        
     }
 
     public void OnPreviousTypeRobo(InputAction.CallbackContext ctx)
     {
-        if (ctx.performed)
+        if (!isReady)
         {
-            if (SceneManager.GetActiveScene().name == "Join")
+            if (ctx.performed)
             {
-                print("Join arrow");
-                personalityTypeTexts[index].gameObject.SetActive(false);
-                if(index == 0)
+                if (SceneManager.GetActiveScene().name == "Join")
                 {
-                    index = personalityTypeTexts.Count - 1;
-                }
-                else
-                {
-                    index -= 1;
-                }
-                personalityTypeTexts[index].gameObject.SetActive(true);
+                    print("Join arrow");
+                    personalityTypeTexts[index].gameObject.SetActive(false);
+                    if (index == 0)
+                    {
+                        index = personalityTypeTexts.Count - 1;
+                    }
+                    else
+                    {
+                        index -= 1;
+                    }
+                    personalityTypeTexts[index].gameObject.SetActive(true);
 
-                SetScreenToPersonality();
+                    SetScreenToPersonality();
+                }
             }
         }
     }
@@ -121,6 +134,10 @@ public class JoinFunctionality : MonoBehaviour
             if (SceneManager.GetActiveScene().name == "Join")
             {
                 print("ready up");
+                isReady = true;
+                playerSpawnHelpIndex.transform.GetChild(0).GetChild(1).gameObject.SetActive(false);
+                playerSpawnHelpIndex.transform.GetChild(0).GetChild(2).gameObject.SetActive(false);
+
             }
         }
     }

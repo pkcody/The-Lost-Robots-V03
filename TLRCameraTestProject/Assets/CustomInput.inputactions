@@ -915,7 +915,7 @@
                 {
                     "name": "",
                     "id": "4d12ac34-50df-4259-bef9-28c0a054871c",
-                    "path": "<Gamepad>/buttonWest",
+                    "path": "<Gamepad>/dpad/up",
                     "interactions": "Press(behavior=1)",
                     "processors": "",
                     "groups": "Gamepad",

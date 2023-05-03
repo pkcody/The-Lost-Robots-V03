@@ -49,7 +49,15 @@ public class ScenesManager : MonoBehaviour
 
     public void GoMainMenuScene()
     {
-        if (PlayerSpawning.instance.players[0] != null)
+        foreach (var players in FindObjectsOfType<JoinFunctionality>())
+        {
+            if (!players.isReady)
+            {
+                return;
+            }
+        }
+        
+        if (PlayerSpawning.instance.players[1] != null)
         {
             SceneManager.LoadScene("MainMenu");
         }

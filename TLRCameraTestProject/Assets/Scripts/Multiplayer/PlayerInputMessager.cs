@@ -18,7 +18,7 @@ public class PlayerInputMessager : MonoBehaviour
             Destroy(gameObject);
         }
 
-        DontDestroyOnLoad(gameObject);
+        //DontDestroyOnLoad(gameObject);
     }
 
     private void OnPlayerJoined(PlayerInput player)

@@ -167,7 +167,16 @@ public class EnemyMove : MonoBehaviour
     {
         monsterSlider.value -= damage;
         EnemyLives -= damage;
-        _as.PlayOneShot(audioClips.Find(clipName => clipName.name == "DamageEnemy"), 0.5f);
+        try
+        {
+            _as.PlayOneShot(audioClips.Find(clipName => clipName.name == "EnemyDamage"), 0.5f);
+
+        }
+        catch
+        {
+
+            Debug.Log("dmg monster");
+        }
 
 
     }
